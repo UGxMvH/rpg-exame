@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class Movement : MonoBehaviour
 {
-    Rigidbody2D body;
+    private Rigidbody2D body;
+    private float moveLimiter = 0.7f;
 
-    float horizontal;
-    float vertical;
-    float moveLimiter = 0.7f;
+    internal float horizontal;
+    internal float vertical;
 
     public float runSpeed = 20.0f;
 
