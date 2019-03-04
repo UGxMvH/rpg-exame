@@ -5,11 +5,16 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Movement : MonoBehaviour
 {
-    private Rigidbody2D body;
-    private float moveLimiter = 0.7f;
+    public enum Direction { North, East, South, West };
 
+    private Rigidbody2D body;
+    private float lastVerticalInput;
+    private float lastHorizontalInput;
+
+    internal Direction currentDirection;
     internal float horizontal;
     internal float vertical;
+    internal bool isIdle = true;
 
     public float runSpeed = 20.0f;
 
@@ -23,17 +28,94 @@ public class Movement : MonoBehaviour
         // Gives a value between -1 and 1
         horizontal = Input.GetAxisRaw("Horizontal"); // -1 is left
         vertical = Input.GetAxisRaw("Vertical"); // -1 is down
+
+        UpdateLastInputTimes();
+        UpdateIdleState();
+        UpdateDirection();
+    }
+
+    private void UpdateLastInputTimes()
+    {
+        // Update horizontal time
+        if (horizontal == 0)
+        {
+            lastHorizontalInput = 0;
+        }
+        else
+        {
+            if (lastHorizontalInput == 0)
+            {
+                lastHorizontalInput = Time.time;
+            }
+        }
+
+        // Update vertical time
+        if (vertical == 0)
+        {
+            lastVerticalInput = 0;
+        }
+        else
+        {
+            if (lastVerticalInput == 0)
+            {
+                lastVerticalInput = Time.time;
+            }
+        }
+    }
+
+    // Update direction
+    private void UpdateDirection()
+    {
+        // Get direction
+        if (body.velocity.y > 0)
+        {
+            currentDirection = Direction.North;
+        }
+        else if (body.velocity.y < 0)
+        {
+            currentDirection = Direction.South;
+        }
+        else if (body.velocity.x > 0)
+        {
+            currentDirection = Direction.East;
+        }
+        else if (body.velocity.x < 0)
+        {
+            currentDirection = Direction.West;
+        }
+    }
+
+    private void UpdateIdleState()
+    {
+        if (body.velocity.y == 0 && body.velocity.x == 0)
+        {
+            isIdle = true;
+        }
+        else
+        {
+            isIdle = false;
+        }
     }
 
     void FixedUpdate()
     {
-        if (horizontal != 0 && vertical != 0) // Check for diagonal movement
+        float movementX = horizontal;
+        float movementY = vertical;
+
+        // Block diognal movement
+        if (movementX != 0 && movementY != 0)
         {
-            // limit movement speed diagonally, so you move at 70% speed
-            horizontal *= moveLimiter;
-            vertical *= moveLimiter;
+            // Check which key is pressed the latest
+            if (lastVerticalInput >= lastHorizontalInput)
+            {
+                movementX = 0;
+            }
+            else
+            {
+                movementY = 0;
+            }
         }
 
-        body.velocity = new Vector2(horizontal * runSpeed, vertical * runSpeed);
+        body.velocity = new Vector2(movementX * runSpeed, movementY * runSpeed);
     }
 }

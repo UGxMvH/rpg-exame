@@ -6,13 +6,9 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class HeroAnimations : MonoBehaviour
 {
-    public enum Direction { North, East, South, West };
-
     #region Private Variables
     private new SpriteRenderer renderer;
     private Movement movement;
-    private Direction currentDirection;
-    private bool isIdle = true;
     private Sprite[] usingArray = null;
     private int currentIndex = 0;
     #endregion
@@ -49,73 +45,33 @@ public class HeroAnimations : MonoBehaviour
     // Update animations each frame.
     private void Update()
     {
-        // Get idleState
-        UpdateIdleState();
-
-        // Get direction
-        UpdateDirection();
-
         // Set correct sprite
         UpdateSprite();
-    }
-
-    private void UpdateIdleState()
-    {
-        if (movement.vertical == 0 && movement.horizontal == 0)
-        {
-            isIdle = true;
-        }
-        else
-        {
-            isIdle = false;
-        }
-    }
-
-    // Update direction
-    private void UpdateDirection()
-    {
-        // Get direction
-        if (movement.vertical > 0)
-        {
-            currentDirection = Direction.North;
-        }
-        else if (movement.vertical < 0)
-        {
-            currentDirection = Direction.South;
-        }
-        else if (movement.horizontal > 0)
-        {
-            currentDirection = Direction.East;
-        }
-        else if (movement.horizontal < 0)
-        {
-            currentDirection = Direction.West;
-        }
     }
 
     // Animate
     private void UpdateSprite()
     {
         // Check if is idle
-        if (isIdle)
+        if (movement.isIdle)
         {
             // Player is idle so get idle animation
-            if (currentDirection == Direction.North)
+            if (movement.currentDirection == Movement.Direction.North)
             {
                 renderer.sprite = idleNorth;
                 renderer.flipX = false;
             }
-            else if (currentDirection == Direction.South)
+            else if (movement.currentDirection == Movement.Direction.South)
             {
                 renderer.sprite = idleSouth;
                 renderer.flipX = false;
             }
-            else if (currentDirection == Direction.East)
+            else if (movement.currentDirection == Movement.Direction.East)
             {
                 renderer.sprite = idleEast;
                 renderer.flipX = false;
             }
-            else if (currentDirection == Direction.West)
+            else if (movement.currentDirection == Movement.Direction.West)
             {
                 // Check if there is a west sprite otherwise use flip
                 if (idleWest)
@@ -134,22 +90,22 @@ public class HeroAnimations : MonoBehaviour
         else
         {
             // Get correct array
-            if (currentDirection == Direction.North)
+            if (movement.currentDirection == Movement.Direction.North)
             {
                 usingArray = walkNorth;
                 renderer.flipX = false;
             }
-            else if (currentDirection == Direction.South)
+            else if (movement.currentDirection == Movement.Direction.South)
             {
                 usingArray = walkSouth;
                 renderer.flipX = false;
             }
-            else if (currentDirection == Direction.East)
+            else if (movement.currentDirection == Movement.Direction.East)
             {
                 usingArray = walkEast;
                 renderer.flipX = false;
             }
-            else if (currentDirection == Direction.West)
+            else if (movement.currentDirection == Movement.Direction.West)
             {
                 // Check if there is a west sprite otherwise use flip
                 if (idleWest)
@@ -171,7 +127,7 @@ public class HeroAnimations : MonoBehaviour
         while(true)
         {
             // Check if we have all conditions to know that we are running
-            if (!isIdle && usingArray != null)
+            if (!movement.isIdle && usingArray != null)
             {
                 // Check if index is within range
                 if (currentIndex >= usingArray.Length)
