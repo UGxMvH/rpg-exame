@@ -275,6 +275,14 @@ MonoBehaviour:
     type: 3}
   cornerBottomRight: {fileID: 7613270875617221255, guid: 3f301ec518d9442e8adab007f517beb3,
     type: 3}
+  normalDoorLeft: {fileID: 1335039386117775955, guid: 284e93c493739478699d5f1bb7a1901e,
+    type: 3}
+  normalDoorRight: {fileID: 7756951321283278446, guid: b09dc07daf65a4ddd9f07a1941a8cc92,
+    type: 3}
+  normalDoorTop: {fileID: 3755791500506684107, guid: 693b416b76a8c46bba7d90208ad8a3f1,
+    type: 3}
+  normalDoorBottom: {fileID: 8210011878890593176, guid: 8c4b9274220994ff1a28b8b0cd3cc965,
+    type: 3}
 --- !u!4 &1468550965
 Transform:
   m_ObjectHideFlags: 0

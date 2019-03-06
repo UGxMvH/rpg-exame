@@ -9,6 +9,7 @@ public class LevelGeneration : MonoBehaviour
     [Header("Settings")]
     public int minSize;
     public int maxSize;
+    public int maxRooms = 10;
     public new SmoothCamera camera;
 
     [Header("Tiles")]
@@ -21,6 +22,12 @@ public class LevelGeneration : MonoBehaviour
     public GameObject cornerTopRight;
     public GameObject cornerBottomLeft;
     public GameObject cornerBottomRight;
+
+    [Header("Doors")]
+    public GameObject normalDoorLeft;
+    public GameObject normalDoorRight;
+    public GameObject normalDoorTop;
+    public GameObject normalDoorBottom;
 
     // Start is called before the first frame update
     void Start()
@@ -37,7 +44,7 @@ public class LevelGeneration : MonoBehaviour
         }
 
         // Gen main room
-        StartCoroutine(GenerateRoom(true));
+        StartCoroutine(GenerateRoom(true, Vector2.zero));
     }
 
     private int MakeOdd(int i)
@@ -50,10 +57,17 @@ public class LevelGeneration : MonoBehaviour
         return i;
     }
 
-    IEnumerator GenerateRoom(bool startRoom)
+    IEnumerator GenerateRoom(bool startRoom, Vector2 location)
     {
+        // Default variables
+        bool leftDoor = false;
+        bool rightDoor = false;
+        bool topDoor = false;
+        bool bottomDoor = false;
+
         // Generate root of room
         GameObject room = new GameObject("Room #" + (rooms.Count + 1));
+        room.transform.position = location;
         rooms.Add(room);
 
         // Datermine size
@@ -64,6 +78,35 @@ public class LevelGeneration : MonoBehaviour
         yield return new WaitForEndOfFrame();
 
         int sizeY = MakeOdd(Random.Range(minSize, sizeX));
+
+        // Datermine locations of doors
+        // Left door check
+        if (Random.Range(1, 100) % 2 == 0)
+        {
+            // Yes we want a top door
+            leftDoor = true;
+        }
+
+        // Right door check
+        if (Random.Range(1, 100) % 2 == 0)
+        {
+            // Yes we want a top door
+            rightDoor = true;
+        }
+
+        // Top door check
+        if (Random.Range(1, 100) % 2 == 0)
+        {
+            // Yes we want a top door
+            topDoor = true;
+        }
+
+        // Bottom door check
+        if (Random.Range(1, 100) % 2 == 0)
+        {
+            // Yes we want a top door
+            bottomDoor = true;
+        }
 
         // Generate room
         for (int x = 0; x < sizeX; x++)
@@ -120,6 +163,30 @@ public class LevelGeneration : MonoBehaviour
                 if (x == (sizeX - 1) && y == (sizeY - 1) && cornerTopRight)
                 {
                     Instantiate(cornerTopRight, new Vector2(x + 1, y + 1), Quaternion.identity, room.transform);
+                }
+
+                // Left door generation
+                if (x == 0 && y == (int)Mathf.Floor(sizeY / 2) && leftDoor)
+                {
+                    Instantiate(normalDoorLeft, new Vector2(x - 1, y), Quaternion.identity, room.transform);
+                }
+
+                // Right door generation
+                if (x == (sizeX - 1) && y == (int)Mathf.Floor(sizeY / 2) && rightDoor)
+                {
+                    Instantiate(normalDoorRight, new Vector2(x + 1, y), Quaternion.identity, room.transform);
+                }
+
+                // Top door generation
+                if (y == (sizeY - 1) && x == (int)Mathf.Floor(sizeX/2) && topDoor)
+                {
+                    Instantiate(normalDoorTop, new Vector2(x, y + 1), Quaternion.identity, room.transform);
+                }
+
+                // Bottom door generation
+                if (y == 0 && x == (int)Mathf.Floor(sizeX / 2) && bottomDoor)
+                {
+                    Instantiate(normalDoorBottom, new Vector2(x, y - 1), Quaternion.identity, room.transform);
                 }
 
                 // Pick random tile
