@@ -68,6 +68,7 @@ public class LevelGeneration : MonoBehaviour
         // Generate root of room
         GameObject room = new GameObject("Room #" + (rooms.Count + 1));
         room.transform.position = location;
+        room.AddComponent<Room>();
         rooms.Add(room);
 
         // Datermine size
@@ -117,83 +118,83 @@ public class LevelGeneration : MonoBehaviour
                 if (x == 0 && leftWalls.Length > 0)
                 {
                     GameObject wall = leftWalls[Random.Range(0, leftWalls.Length)];
-                    Instantiate(wall, new Vector2(x - 1, y), Quaternion.identity, room.transform);
+                    Instantiate(wall, (Vector2)room.transform.position + new Vector2(x - 1, y), Quaternion.identity, room.transform);
                 }
 
                 // Create right wall
                 if (x == (sizeX - 1) && rightWalls.Length > 0)
                 {
                     GameObject wall = rightWalls[Random.Range(0, rightWalls.Length)];
-                    Instantiate(wall, new Vector2(x + 1, y), Quaternion.identity, room.transform);
+                    Instantiate(wall, (Vector2)room.transform.position + new Vector2(x + 1, y), Quaternion.identity, room.transform);
                 }
 
                 // Create bottom wall
                 if (y == 0 && bottomWalls.Length > 0)
                 {
                     GameObject wall = bottomWalls[Random.Range(0, bottomWalls.Length)];
-                    Instantiate(wall, new Vector2(x, y - 1), Quaternion.identity, room.transform);
+                    Instantiate(wall, (Vector2)room.transform.position + new Vector2(x, y - 1), Quaternion.identity, room.transform);
                 }
 
                 // Create top wall
                 if (y == (sizeY - 1) && topWalls.Length > 0)
                 {
                     GameObject wall = topWalls[Random.Range(0, topWalls.Length)];
-                    Instantiate(wall, new Vector2(x, y + 1), Quaternion.identity, room.transform);
+                    Instantiate(wall, (Vector2)room.transform.position + new Vector2(x, y + 1), Quaternion.identity, room.transform);
                 }
 
                 // Create bottom left corner
                 if (x == 0 && y == 0 && cornerBottomLeft)
                 {
-                    Instantiate(cornerBottomLeft, new Vector2(x - 1, y - 1), Quaternion.identity, room.transform);
+                    Instantiate(cornerBottomLeft, (Vector2)room.transform.position + new Vector2(x - 1, y - 1), Quaternion.identity, room.transform);
                 }
 
                 // Create bottom right corner
                 if (x == (sizeX - 1)  && y == 0 && cornerBottomRight)
                 {
-                    Instantiate(cornerBottomRight, new Vector2(x + 1, y - 1), Quaternion.identity, room.transform);
+                    Instantiate(cornerBottomRight, (Vector2)room.transform.position + new Vector2(x + 1, y - 1), Quaternion.identity, room.transform);
                 }
 
                 // Create top left corner
                 if (x == 0 && y == (sizeY - 1) && cornerTopLeft)
                 {
-                    Instantiate(cornerTopLeft, new Vector2(x - 1, y + 1), Quaternion.identity, room.transform);
+                    Instantiate(cornerTopLeft, (Vector2)room.transform.position + new Vector2(x - 1, y + 1), Quaternion.identity, room.transform);
                 }
 
                 // Create top right corner
                 if (x == (sizeX - 1) && y == (sizeY - 1) && cornerTopRight)
                 {
-                    Instantiate(cornerTopRight, new Vector2(x + 1, y + 1), Quaternion.identity, room.transform);
+                    Instantiate(cornerTopRight, (Vector2)room.transform.position + new Vector2(x + 1, y + 1), Quaternion.identity, room.transform);
                 }
 
                 // Left door generation
                 if (x == 0 && y == (int)Mathf.Floor(sizeY / 2) && leftDoor)
                 {
-                    Instantiate(normalDoorLeft, new Vector2(x - 1, y), Quaternion.identity, room.transform);
+                    Instantiate(normalDoorLeft, (Vector2)room.transform.position + new Vector2(x - 1, y), Quaternion.identity, room.transform);
                 }
 
                 // Right door generation
                 if (x == (sizeX - 1) && y == (int)Mathf.Floor(sizeY / 2) && rightDoor)
                 {
-                    Instantiate(normalDoorRight, new Vector2(x + 1, y), Quaternion.identity, room.transform);
+                    Instantiate(normalDoorRight, (Vector2)room.transform.position + new Vector2(x + 1, y), Quaternion.identity, room.transform);
                 }
 
                 // Top door generation
                 if (y == (sizeY - 1) && x == (int)Mathf.Floor(sizeX/2) && topDoor)
                 {
-                    Instantiate(normalDoorTop, new Vector2(x, y + 1), Quaternion.identity, room.transform);
+                    Instantiate(normalDoorTop, (Vector2)room.transform.position + new Vector2(x, y + 1), Quaternion.identity, room.transform);
                 }
 
                 // Bottom door generation
                 if (y == 0 && x == (int)Mathf.Floor(sizeX / 2) && bottomDoor)
                 {
-                    Instantiate(normalDoorBottom, new Vector2(x, y - 1), Quaternion.identity, room.transform);
+                    Instantiate(normalDoorBottom, (Vector2)room.transform.position + new Vector2(x, y - 1), Quaternion.identity, room.transform);
                 }
 
                 // Pick random tile
                 GameObject tile = floorTiles[Random.Range(0, floorTiles.Length)];
                    
                 // Create floor tile
-                Instantiate(tile, new Vector2(x, y), Quaternion.identity, room.transform);
+                Instantiate(tile, (Vector2)room.transform.position + new Vector2(x, y), Quaternion.identity, room.transform);
             }
         }
 
