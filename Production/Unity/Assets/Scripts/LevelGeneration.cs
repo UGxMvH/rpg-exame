@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class LevelGeneration : MonoBehaviour
 {
-    private List<GameObject> rooms = new List<GameObject>();
+    public Dictionary<Vector2, Room> rooms = new Dictionary<Vector2, Room>();
 
     [Header("Settings")]
     public int minSize;
     public int maxSize;
     public int maxRooms = 10;
+    public int minRooms = 5;
     public new SmoothCamera camera;
 
     [Header("Tiles")]
@@ -44,7 +45,7 @@ public class LevelGeneration : MonoBehaviour
         }
 
         // Gen main room
-        StartCoroutine(GenerateRoom(true, Vector2.zero));
+       StartCoroutine(GenerateRoom(Vector2.zero));
     }
 
     private int MakeOdd(int i)
@@ -57,60 +58,104 @@ public class LevelGeneration : MonoBehaviour
         return i;
     }
 
-    IEnumerator GenerateRoom(bool startRoom, Vector2 location)
+    private IEnumerator GenerateRoom(Vector2 virtualLoc)
     {
+        Debug.Log(virtualLoc);
+
         // Default variables
-        bool leftDoor = false;
-        bool rightDoor = false;
-        bool topDoor = false;
-        bool bottomDoor = false;
+        bool lastRoom = false;
+        bool mainRoom = false;
+        bool northDoor = false;
+        bool eastDoor = false;
+        bool southDoor = false;
+        bool westDoor = false;
+
+        if (rooms.Count == maxRooms)
+        {
+            lastRoom = true;
+        }
+        else if (rooms.Count > maxRooms)
+        {
+            yield break;
+        }
+
+        // Create base gameobject
+        GameObject roomGo = new GameObject("Room #" + (rooms.Count + 1));
+
+        Room room = roomGo.AddComponent<Room>();
+        room.myGenerator = this;
+        room.virtualLoc = virtualLoc;
+        room.Init();
+
+        rooms.Add(virtualLoc, room);
+
+        // Main room check
+        if (rooms.Count == 0)
+        {
+            mainRoom = true;
+        }
+
+        // Check rooms on my sides
+        if (room.northRoom)
+        {
+            northDoor = true;
+        }
+
+        if (room.eastRoom)
+        {
+            eastDoor = true;
+        }
+
+        if (room.southRoom)
+        {
+            southDoor = true;
+        }
+
+        if (room.westRoom)
+        {
+            westDoor = true;
+        }
 
         // Generate root of room
-        GameObject room = new GameObject("Room #" + (rooms.Count + 1));
-        room.transform.position = location;
-        room.AddComponent<Room>();
-        rooms.Add(room);
-
-        // Datermine size
-        yield return new WaitForEndOfFrame();
-       
         int sizeX = MakeOdd(Random.Range(minSize, maxSize));
-
         yield return new WaitForEndOfFrame();
-
         int sizeY = MakeOdd(Random.Range(minSize, sizeX));
 
         // Datermine locations of doors
-        // Left door check
-        if (Random.Range(1, 100) % 2 == 0)
+        // Top door check
+        yield return new WaitForEndOfFrame();
+        if (!northDoor && !lastRoom && Random.Range(1, 100) % 2 == 0)
         {
             // Yes we want a top door
-            leftDoor = true;
+            northDoor = true;
         }
 
         // Right door check
-        if (Random.Range(1, 100) % 2 == 0)
+        yield return new WaitForEndOfFrame();
+        if (!eastDoor && !lastRoom && Random.Range(1, 100) % 2 == 0)
         {
             // Yes we want a top door
-            rightDoor = true;
-        }
-
-        // Top door check
-        if (Random.Range(1, 100) % 2 == 0)
-        {
-            // Yes we want a top door
-            topDoor = true;
+            eastDoor = true;
         }
 
         // Bottom door check
-        if (Random.Range(1, 100) % 2 == 0)
+        yield return new WaitForEndOfFrame();
+        if (!southDoor && !lastRoom && Random.Range(1, 100) % 2 == 0)
         {
             // Yes we want a top door
-            bottomDoor = true;
+            southDoor = true;
+        }
+
+        // Left door check
+        yield return new WaitForEndOfFrame();
+        if (!westDoor && !lastRoom && Random.Range(1, 100) % 2 == 0)
+        {
+            // Yes we want a top door
+            westDoor = true;
         }
 
         // Generate room
-        for (int x = 0; x < sizeX; x++)
+        for (int x = 0; x <  sizeX; x++)
         {
             for (int y = 0; y < sizeY; y++)
             {
@@ -139,73 +184,122 @@ public class LevelGeneration : MonoBehaviour
                 if (y == (sizeY - 1) && topWalls.Length > 0)
                 {
                     GameObject wall = topWalls[Random.Range(0, topWalls.Length)];
-                    Instantiate(wall, (Vector2)room.transform.position + new Vector2(x, y + 1), Quaternion.identity, room.transform);
+                    Instantiate(wall, new Vector2(x, y + 1), Quaternion.identity, room.transform);
                 }
 
                 // Create bottom left corner
                 if (x == 0 && y == 0 && cornerBottomLeft)
                 {
-                    Instantiate(cornerBottomLeft, (Vector2)room.transform.position + new Vector2(x - 1, y - 1), Quaternion.identity, room.transform);
+                    Instantiate(cornerBottomLeft, new Vector2(x - 1, y - 1), Quaternion.identity, room.transform);
                 }
 
                 // Create bottom right corner
                 if (x == (sizeX - 1)  && y == 0 && cornerBottomRight)
                 {
-                    Instantiate(cornerBottomRight, (Vector2)room.transform.position + new Vector2(x + 1, y - 1), Quaternion.identity, room.transform);
+                    Instantiate(cornerBottomRight, new Vector2(x + 1, y - 1), Quaternion.identity, room.transform);
                 }
 
                 // Create top left corner
                 if (x == 0 && y == (sizeY - 1) && cornerTopLeft)
                 {
-                    Instantiate(cornerTopLeft, (Vector2)room.transform.position + new Vector2(x - 1, y + 1), Quaternion.identity, room.transform);
+                    Instantiate(cornerTopLeft, new Vector2(x - 1, y + 1), Quaternion.identity, room.transform);
                 }
 
                 // Create top right corner
                 if (x == (sizeX - 1) && y == (sizeY - 1) && cornerTopRight)
                 {
-                    Instantiate(cornerTopRight, (Vector2)room.transform.position + new Vector2(x + 1, y + 1), Quaternion.identity, room.transform);
+                    Instantiate(cornerTopRight, new Vector2(x + 1, y + 1), Quaternion.identity, room.transform);
                 }
 
                 // Left door generation
-                if (x == 0 && y == (int)Mathf.Floor(sizeY / 2) && leftDoor)
+                if (x == 0 && y == (int)Mathf.Floor(sizeY / 2) && westDoor)
                 {
-                    Instantiate(normalDoorLeft, (Vector2)room.transform.position + new Vector2(x - 1, y), Quaternion.identity, room.transform);
+                    Instantiate(normalDoorLeft, new Vector2(x - 1, y), Quaternion.identity, room.transform);
                 }
 
                 // Right door generation
-                if (x == (sizeX - 1) && y == (int)Mathf.Floor(sizeY / 2) && rightDoor)
+                if (x == (sizeX - 1) && y == (int)Mathf.Floor(sizeY / 2) && eastDoor)
                 {
-                    Instantiate(normalDoorRight, (Vector2)room.transform.position + new Vector2(x + 1, y), Quaternion.identity, room.transform);
+                    Instantiate(normalDoorRight, new Vector2(x + 1, y), Quaternion.identity, room.transform);
                 }
 
                 // Top door generation
-                if (y == (sizeY - 1) && x == (int)Mathf.Floor(sizeX/2) && topDoor)
+                if (y == (sizeY - 1) && x == (int)Mathf.Floor(sizeX / 2) && northDoor)
                 {
-                    Instantiate(normalDoorTop, (Vector2)room.transform.position + new Vector2(x, y + 1), Quaternion.identity, room.transform);
+                    Instantiate(normalDoorTop, new Vector2(x, y + 1), Quaternion.identity, room.transform);
                 }
 
                 // Bottom door generation
-                if (y == 0 && x == (int)Mathf.Floor(sizeX / 2) && bottomDoor)
+                if (y == 0 && x == (int)Mathf.Floor(sizeX / 2) && southDoor)
                 {
-                    Instantiate(normalDoorBottom, (Vector2)room.transform.position + new Vector2(x, y - 1), Quaternion.identity, room.transform);
+                    Instantiate(normalDoorBottom, new Vector2(x, y - 1), Quaternion.identity, room.transform);
                 }
 
                 // Pick random tile
                 GameObject tile = floorTiles[Random.Range(0, floorTiles.Length)];
                    
                 // Create floor tile
-                Instantiate(tile, (Vector2)room.transform.position + new Vector2(x, y), Quaternion.identity, room.transform);
+                Instantiate(tile, new Vector2(x, y), Quaternion.identity, room.transform);
             }
         }
 
         // Check if it is the start room
-        if (startRoom)
+        if (mainRoom)
         {
             // Set camera focus on this room
             camera.target = room.transform;
 
             // Set offset to focus on the middle of the room
             camera.offset = new Vector2(sizeX / 2, sizeY / 2);
+        }
+        else
+        {
+            // Firstly disable room since we'll start in the main room
+            roomGo.SetActive(false);
+        }
+
+        // Generate sub rooms
+        if (!lastRoom)
+        {
+            if (northDoor)
+            {
+                Vector2 loc = new Vector2(virtualLoc.x, virtualLoc.y + 1);
+
+                if (!rooms.ContainsKey(loc))
+                {
+                    StartCoroutine(GenerateRoom(loc));
+                }
+            }
+
+            if (eastDoor)
+            {
+                Vector2 loc = new Vector2(virtualLoc.x + 1, virtualLoc.y);
+
+                if (!rooms.ContainsKey(loc))
+                {
+                    StartCoroutine(GenerateRoom(loc));
+                }
+            }
+
+            if (southDoor)
+            {
+                Vector2 loc = new Vector2(virtualLoc.x, virtualLoc.y - 1);
+
+                if (!rooms.ContainsKey(loc))
+                {
+                    StartCoroutine(GenerateRoom(loc));
+                }
+            }
+
+            if (westDoor)
+            {
+                Vector2 loc = new Vector2(virtualLoc.x - 1, virtualLoc.y);
+
+                if (!rooms.ContainsKey(loc))
+                {
+                    StartCoroutine(GenerateRoom(loc));
+                }
+            }
         }
     }
 }
