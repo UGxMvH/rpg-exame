@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 825246945731943564}
   - component: {fileID: 825246945731943555}
   m_Layer: 0
-  m_Name: Hero
+  m_Name: Hero Overworld
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -157,6 +157,19 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 7376652f4768d4adf82c2dec25babcaa, type: 3}
   - {fileID: 21300000, guid: 54e307e02e8174335a835d5efe3c8380, type: 3}
   walkWest: []
+  attackArrowNorth:
+  - {fileID: 21300000, guid: ffed433e735f44a99b90ef2bcb4119c7, type: 3}
+  - {fileID: 21300000, guid: 8d495247644fb40b5972c92de8b601e9, type: 3}
+  - {fileID: 21300000, guid: afa49c1c777bc41729512b54c7cffb6a, type: 3}
+  attackArrowEast:
+  - {fileID: 21300000, guid: 06aae4ddb038e4d5db20cbfa9674d4ca, type: 3}
+  - {fileID: 21300000, guid: 431ab203426d64ed7acac3c93c98b22d, type: 3}
+  - {fileID: 21300000, guid: 94f37dc86c80b4bbcb69aa5196138416, type: 3}
+  attackArrowSouth:
+  - {fileID: 21300000, guid: d3fc86e87ed624cd4b99f41839d07872, type: 3}
+  - {fileID: 21300000, guid: 0e983ad8fc7bd4f4187c33223f6b784c, type: 3}
+  - {fileID: 21300000, guid: 79e8ab09581164230b48e34a040d92ef, type: 3}
+  attackArrowWest: []
 --- !u!61 &825246945731943564
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -170,7 +183,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 1
-  m_Offset: {x: 0, y: -0.18}
+  m_Offset: {x: 0, y: -0.54}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -181,7 +194,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1.5}
+  m_Size: {x: 1, y: 0.75}
   m_EdgeRadius: 0
 --- !u!66 &825246945731943555
 CompositeCollider2D:
@@ -204,17 +217,17 @@ CompositeCollider2D:
   - m_Collider: {fileID: 825246945731943564}
     m_ColliderPaths:
     - - X: 5000000
-        Y: 5700000
+        Y: -1650000
       - X: -5000000
-        Y: 5700000
+        Y: -1650000
       - X: -5000000
-        Y: -9300000
+        Y: -9150000
       - X: 5000000
-        Y: -9300000
+        Y: -9150000
   m_CompositePaths:
     m_Paths:
-    - - {x: 0.5, y: 0.57}
-      - {x: -0.5, y: 0.57}
-      - {x: -0.5, y: -0.93}
-      - {x: 0.5, y: -0.93}
+    - - {x: 0.5, y: -0.165}
+      - {x: -0.5, y: -0.165}
+      - {x: -0.5, y: -0.915}
+      - {x: 0.5, y: -0.915}
   m_VertexDistance: 0.0005

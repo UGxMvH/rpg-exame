@@ -81,7 +81,7 @@ public class LevelManager : MonoBehaviour
             room.Value.Finish();
         }
 
-        StartCoroutine(CircleAnimate(false));
+        TransitionManager.instance.CircleOut();
     }
 
     private IEnumerator GenerateRoom(Vector2 virtualLoc)
@@ -304,37 +304,6 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    private IEnumerator CircleAnimate(bool animateIn)
-    {
-        if (animateIn)
-        {
-            while (circle.localScale.x > 0)
-            {
-                Vector3 newScale = circle.localScale - new Vector3(0.05f, 0.05f, 0);
-                if (newScale.x < 0)
-                {
-                    newScale.x = 0;
-                    newScale.y = 0;
-                }
-
-                circle.localScale = newScale;
-
-                yield return new WaitForSeconds(0.01f);
-            }
-        }
-        else
-        {
-            while (circle.localScale.x < 3)
-            {
-                Vector3 newScale = circle.localScale + new Vector3(0.05f, 0.05f, 0);
-
-                circle.localScale = newScale;
-
-                yield return new WaitForSeconds(0.01f);
-            }
-        }
-    }
-
     private IEnumerator TransistRooms(Room from, Room to)
     {
         if (transisting)
@@ -345,7 +314,7 @@ public class LevelManager : MonoBehaviour
         transisting = true;
 
         // Spawn in circle
-        yield return StartCoroutine(CircleAnimate(true));
+        yield return StartCoroutine(TransitionManager.instance.CircleAnimate(true));
 
         // Hide old room
         from.gameObject.SetActive(false);
@@ -381,7 +350,7 @@ public class LevelManager : MonoBehaviour
         yield return new WaitForSeconds(.5f);
 
         // Hide circle
-        yield return StartCoroutine(CircleAnimate(false));
+        yield return StartCoroutine(TransitionManager.instance.CircleAnimate(false));
 
         transisting = false;
     }

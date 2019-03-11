@@ -15,6 +15,7 @@ public class Movement : MonoBehaviour
     internal float horizontal;
     internal float vertical;
     internal bool isIdle = true;
+    internal bool isAttacking = false;
 
     public float runSpeed = 20.0f;
 
@@ -25,9 +26,20 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetButtonDown("Attack"))
+        {
+            isAttacking = true;
+        }
+
         // Gives a value between -1 and 1
-        horizontal = Input.GetAxisRaw("Horizontal"); // -1 is left
-        vertical = Input.GetAxisRaw("Vertical"); // -1 is down
+        if (!isAttacking)
+        {
+            horizontal = Input.GetAxisRaw("Horizontal"); // -1 is left
+            vertical = Input.GetAxisRaw("Vertical"); // -1 is down
+        } else {
+            horizontal = 0;
+            vertical = 0;
+        }
 
         UpdateLastInputTimes();
         UpdateIdleState();

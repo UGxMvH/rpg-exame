@@ -9,8 +9,8 @@ public class HeroAnimations : MonoBehaviour
     #region Private Variables
     private new SpriteRenderer renderer;
     private Movement movement;
-    private Sprite[] usingArray = null;
-    private int currentIndex = 0;
+    public Sprite[] usingArray = null;
+    public int currentIndex = 0;
     #endregion
 
     #region Public Variables
@@ -29,6 +29,12 @@ public class HeroAnimations : MonoBehaviour
     public Sprite[] walkEast;
     public Sprite[] walkSouth;
     public Sprite[] walkWest;
+
+    [Header("Arrow attack animations")]
+    public Sprite[] attackArrowNorth;
+    public Sprite[] attackArrowEast;
+    public Sprite[] attackArrowSouth;
+    public Sprite[] attackArrowWest;
     #endregion
 
     private void Start()
@@ -52,9 +58,39 @@ public class HeroAnimations : MonoBehaviour
     // Animate
     private void UpdateSprite()
     {
-        // Check if is idle
-        if (movement.isIdle)
+        // Check if attacking
+        if (movement.isAttacking)
         {
+            if (movement.currentDirection == Movement.Direction.North)
+            {
+                updateArray(attackArrowNorth);
+                renderer.flipX = false;
+            }
+            else if (movement.currentDirection == Movement.Direction.South)
+            {
+                updateArray(attackArrowSouth);
+                renderer.flipX = false;
+            }
+            else if (movement.currentDirection == Movement.Direction.East)
+            {
+                updateArray(attackArrowEast);
+                renderer.flipX = false;
+            }
+            else if (movement.currentDirection == Movement.Direction.West)
+            {
+                // Check if there is a west sprite otherwise use flip
+                if (idleWest)
+                {
+                    updateArray(attackArrowWest);
+                    renderer.flipX = false;
+                }
+                else
+                {
+                    updateArray(attackArrowEast);
+                    renderer.flipX = true;
+                }
+            }
+        } else if (movement.isIdle) {
             // Player is idle so get idle animation
             if (movement.currentDirection == Movement.Direction.North)
             {
@@ -92,17 +128,17 @@ public class HeroAnimations : MonoBehaviour
             // Get correct array
             if (movement.currentDirection == Movement.Direction.North)
             {
-                usingArray = walkNorth;
+                updateArray(walkNorth);
                 renderer.flipX = false;
             }
             else if (movement.currentDirection == Movement.Direction.South)
             {
-                usingArray = walkSouth;
+                updateArray(walkSouth);
                 renderer.flipX = false;
             }
             else if (movement.currentDirection == Movement.Direction.East)
             {
-                usingArray = walkEast;
+                updateArray(walkEast);
                 renderer.flipX = false;
             }
             else if (movement.currentDirection == Movement.Direction.West)
@@ -110,16 +146,26 @@ public class HeroAnimations : MonoBehaviour
                 // Check if there is a west sprite otherwise use flip
                 if (idleWest)
                 {
-                    usingArray = walkWest;
+                    updateArray(walkWest);
                     renderer.flipX = false;
                 }
                 else
                 {
-                    usingArray = walkEast;
+                    updateArray(walkEast);
                     renderer.flipX = true;
                 }
             }
         }
+    }
+
+    private void updateArray(Sprite[] newArray)
+    {
+        if (newArray != usingArray)
+        {
+            currentIndex = 0;
+        }
+
+        usingArray = newArray;
     }
 
     private IEnumerator Animate()
@@ -127,12 +173,18 @@ public class HeroAnimations : MonoBehaviour
         while(true)
         {
             // Check if we have all conditions to know that we are running
-            if (!movement.isIdle && usingArray != null)
+            if ((!movement.isIdle || movement.isAttacking) && usingArray != null)
             {
                 // Check if index is within range
                 if (currentIndex >= usingArray.Length)
                 {
                     currentIndex = 0;
+                    
+                    if (movement.isAttacking)
+                    {
+                        movement.isAttacking = false;
+                        continue;
+                    }
                 }
 
                 // Animate
