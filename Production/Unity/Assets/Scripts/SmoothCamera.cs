@@ -6,6 +6,7 @@ public class SmoothCamera : MonoBehaviour
 {
     private Vector3 velocity = Vector3.zero;
 
+    public bool smooth = true;
     public Transform target;
     [Range(0.1f, 1f)]
     public float smoothness = 0.5f;
@@ -15,6 +16,17 @@ public class SmoothCamera : MonoBehaviour
     void Update()
     {
         if (!target) return;
+
+        if (!smooth)
+        {
+            Vector3 pos = target.position;
+            pos.z = transform.position.z;
+            pos.x += offset.x;
+            pos.y += offset.y;
+
+            transform.position = pos;
+            return;
+        }
 
         // Get target location
         Vector3 targetPos = target.position;

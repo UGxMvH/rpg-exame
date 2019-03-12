@@ -178,6 +178,26 @@ public class LevelManager : MonoBehaviour
             // Yes we want a top door
             westDoor = true;
         }
+        
+        // Make sure we get the minimum amount of rooms
+        if (!northDoor && !eastDoor && !southDoor && !westDoor && rooms.Count < minRooms)
+        {
+            switch(Random.Range(1, 4))
+            {
+                case 1:
+                    northDoor = true;
+                    break;
+                case 2:
+                    eastDoor = true;
+                    break;
+                case 3:
+                    southDoor = true;
+                    break;
+                case 4:
+                    westDoor = true;
+                    break;
+            }
+        }
 
         // Generate room
         for (int x = 0; x <  sizeX; x++)
@@ -252,6 +272,8 @@ public class LevelManager : MonoBehaviour
 
             // Set offset to focus on the middle of the room
             camera.offset = new Vector2(sizeX / 2, sizeY / 2);
+
+            camera.GetComponent<Camera>().orthographicSize = sizeY / 2 + 2;
         }
         else
         {
@@ -325,6 +347,7 @@ public class LevelManager : MonoBehaviour
         // Set camera to new room
         camera.target = to.transform;
         camera.offset = new Vector2(Mathf.Floor(to.size.x / 2), Mathf.Floor(to.size.y / 2));
+        camera.GetComponent<Camera>().orthographicSize = to.size.y / 2 + 2;
 
         // Move player to correct location
         if (from.northRoom == to)

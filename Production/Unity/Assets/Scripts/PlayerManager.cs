@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class Movement : MonoBehaviour
+public class PlayerManager : MonoBehaviour
 {
     public enum Direction { North, East, South, West };
 
@@ -19,16 +19,17 @@ public class Movement : MonoBehaviour
 
     public float runSpeed = 20.0f;
 
-    void Start()
+    private void Start()
     {
         body = GetComponent<Rigidbody2D>();
     }
 
-    void Update()
+    private void Update()
     {
-        if (Input.GetButtonDown("Attack"))
+        if (Input.GetButtonDown("Attack") && !isAttacking)
         {
             isAttacking = true;
+            StartCoroutine(Attacking());
         }
 
         // Gives a value between -1 and 1
@@ -73,6 +74,39 @@ public class Movement : MonoBehaviour
                 lastVerticalInput = Time.time;
             }
         }
+    }
+
+    private IEnumerator Attacking()
+    {
+        yield return new WaitForSeconds(.3f);
+
+        Vector2 pos = transform.position;
+        Quaternion rot = Quaternion.identity;
+
+        if (currentDirection == Direction.North)
+        {
+            pos += new Vector2(0, .5f);
+        }
+
+        if (currentDirection == Direction.East)
+        {
+            pos += new Vector2(.6f, 0);
+            rot = Quaternion.Euler(0, 0, -90);
+        }
+
+        if (currentDirection == Direction.South)
+        {
+            pos += new Vector2(0, -.8f);
+            rot = Quaternion.Euler(0, 0, 180);
+        }
+
+        if (currentDirection == Direction.West)
+        {
+            pos += new Vector2(-.6f, 0);
+            rot = Quaternion.Euler(0, 0, 90);
+        }
+
+        PoolManager.instance.InstantiateObject("Arrow", pos, rot);
     }
 
     // Update direction
