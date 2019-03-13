@@ -5,7 +5,7 @@ using UnityEngine;
 public class Room : MonoBehaviour
 {
     // Private variables
-    private List<string> enemies = new List<string>();
+    private List<EnemyManager> enemies = new List<EnemyManager>();
 
     private Door northDoor;
     private Door eastDoor;
