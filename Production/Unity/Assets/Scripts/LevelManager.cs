@@ -33,6 +33,9 @@ public class LevelManager : MonoBehaviour
     public GameObject normalDoorTop;
     public GameObject normalDoorBottom;
 
+    [Header("Enemies")]
+    public GameObject[] enemies;
+
     [Header("Transistion")]
     public RectTransform circle;
 
@@ -77,6 +80,12 @@ public class LevelManager : MonoBehaviour
         // Rooms are generated let them finish and generate doors
         foreach(KeyValuePair<Vector2, Room> room in rooms)
         {
+            // Diffrent kind of rooms
+            if (room.Key != Vector2.zero)
+            {
+                room.Value.containsEnemies = true;
+            }
+
             // Finish room
             room.Value.Finish();
         }

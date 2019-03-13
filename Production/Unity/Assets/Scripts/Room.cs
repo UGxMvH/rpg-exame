@@ -13,6 +13,9 @@ public class Room : MonoBehaviour
     private Door westDoor;
 
     // Public variables
+    public bool containsEnemies;
+    public bool isShopRoom;
+
     public LevelManager myGenerator;
     public Vector2 virtualLoc;
     public Vector2 size;
@@ -39,6 +42,7 @@ public class Room : MonoBehaviour
     {
         GetNeighbors();
         CreateDoors();
+        SetUpRoom();
     }
 
     private void GetNeighbors()
@@ -94,6 +98,25 @@ public class Room : MonoBehaviour
         {
             westDoor = Instantiate(myGenerator.normalDoorLeft, new Vector2(-1, Mathf.Floor(size.y / 2)), Quaternion.identity, doors.transform).GetComponent<Door>();
             westDoor.room = this;
+        }
+    }
+
+    private void SetUpRoom()
+    {
+        if (containsEnemies)
+        {
+            // Lets calculate how many
+            int amount = Random.Range(1, (int)Mathf.Floor(size.x / 2));
+
+            for (int i = 0; i < amount; i++)
+            {
+                // create enemy in room
+                GameObject prefab = myGenerator.enemies[Random.Range(0, myGenerator.enemies.Length)];
+
+                EnemyManager enemy = Instantiate(prefab, Vector2.zero, Quaternion.identity, transform).GetComponent<EnemyManager>();
+
+                enemies.Add(enemy);
+            }
         }
     }
 
