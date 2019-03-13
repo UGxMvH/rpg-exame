@@ -5,6 +5,8 @@ using UnityEngine;
 public class Room : MonoBehaviour
 {
     // Private variables
+    private List<string> enemies = new List<string>();
+
     private Door northDoor;
     private Door eastDoor;
     private Door southDoor;
@@ -108,6 +110,15 @@ public class Room : MonoBehaviour
 
         traps = new GameObject("Traps");
         traps.transform.SetParent(transform);
+    }
+
+    public void EnteredRoom()
+    {
+        // If there are no enemies open doors!
+        if (enemies.Count == 0 && !doorsOpen)
+        {
+            OpenDoors();
+        }
     }
 
     public void LeaveRoom(Door door)

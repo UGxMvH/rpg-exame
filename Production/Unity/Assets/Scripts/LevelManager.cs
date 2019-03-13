@@ -380,5 +380,7 @@ public class LevelManager : MonoBehaviour
         yield return StartCoroutine(TransitionManager.instance.CircleAnimate(false));
 
         transisting = false;
+
+        to.EnteredRoom();
     }
 }
