@@ -90,7 +90,7 @@ public class PlayerManager : MonoBehaviour
 
         if (currentDirection == Direction.East)
         {
-            pos += new Vector2(.6f, 0);
+            pos += new Vector2(.6f, -.15f);
             rot = Quaternion.Euler(0, 0, -90);
         }
 
@@ -102,7 +102,7 @@ public class PlayerManager : MonoBehaviour
 
         if (currentDirection == Direction.West)
         {
-            pos += new Vector2(-.6f, 0);
+            pos += new Vector2(-.6f, -.15f);
             rot = Quaternion.Euler(0, 0, 90);
         }
 

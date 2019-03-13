@@ -120,3 +120,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   room: {fileID: 0}
+  doorAnimation:
+  - {fileID: 21300016, guid: d5d015b796401344e930ecba3c89a1c9, type: 3}
+  - {fileID: 21300018, guid: d5d015b796401344e930ecba3c89a1c9, type: 3}
+  - {fileID: 21300020, guid: d5d015b796401344e930ecba3c89a1c9, type: 3}
+  - {fileID: 21300022, guid: d5d015b796401344e930ecba3c89a1c9, type: 3}

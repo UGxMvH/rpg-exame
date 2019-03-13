@@ -81,7 +81,11 @@ public class LevelManager : MonoBehaviour
             room.Value.Finish();
         }
 
-        TransitionManager.instance.CircleOut();
+        // Show room
+        yield return StartCoroutine(TransitionManager.instance.CircleAnimate(false));
+
+        // Open doors
+        rooms[Vector2.zero].OpenDoors();
     }
 
     private IEnumerator GenerateRoom(Vector2 virtualLoc)
