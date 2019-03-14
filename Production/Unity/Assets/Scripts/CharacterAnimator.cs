@@ -11,6 +11,7 @@ public class CharacterAnimator : MonoBehaviour
     private CharacterManager character;
     private Sprite[] usingArray = null;
     private int currentIndex = 0;
+    private Color normalColor;
     #endregion
 
     #region Public Variables
@@ -46,6 +47,9 @@ public class CharacterAnimator : MonoBehaviour
         // Gather required components
         renderer = GetComponent<SpriteRenderer>();
         character = GetComponent<CharacterManager>();
+
+        // Gather default variables
+        normalColor = renderer.material.color;
 
         // Start animation coroutine
         StartCoroutine(Animate());
@@ -232,9 +236,6 @@ public class CharacterAnimator : MonoBehaviour
 
     public IEnumerator GotHit()
     {
-        // Keep normal color in mind
-        Color prevColor = renderer.material.color;
-
         // Change color to hit
         renderer.color = hitColor;
 
@@ -242,11 +243,55 @@ public class CharacterAnimator : MonoBehaviour
         yield return new WaitForSeconds(.25f);
 
         // Change color back
-        renderer.color = prevColor;
+        renderer.color = normalColor;
     }
 
     public IEnumerator EnemyAttack()
     {
-        yield return new WaitForEndOfFrame();
+        renderer.color = Color.white;
+        
+        yield return new WaitForSeconds(.5f);
+
+        renderer.color = normalColor;
+
+        yield return new WaitForSeconds(.5f);
+
+        renderer.color = Color.white;
+
+        yield return new WaitForSeconds(.5f);
+
+        renderer.color = normalColor;
+
+        yield return new WaitForSeconds(.5f);
+
+        renderer.color = Color.white;
+
+        yield return new WaitForSeconds(.5f);
+
+        renderer.color = normalColor;
+
+        yield return new WaitForSeconds(.15f);
+
+        renderer.color = Color.white;
+
+        yield return new WaitForSeconds(.15f);
+
+        renderer.color = normalColor;
+
+        yield return new WaitForSeconds(.15f);
+
+        renderer.color = Color.white;
+
+        yield return new WaitForSeconds(.15f);
+
+        renderer.color = normalColor;
+
+        yield return new WaitForSeconds(.15f);
+
+        renderer.color = Color.white;
+
+        yield return new WaitForSeconds(.15f);
+
+        renderer.color = normalColor;
     }
 }

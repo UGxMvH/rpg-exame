@@ -1386,6 +1386,10 @@ MonoBehaviour:
     amount: 10
     prefab: {fileID: 5366089240739074807, guid: 810bd062f8d644001a4aba1c9bcf3c15,
       type: 3}
+  - tag: Bullet
+    amount: 30
+    prefab: {fileID: 2791098839067450653, guid: bf6f7a6de59e78b48880d33a5f6ab401,
+      type: 3}
 --- !u!4 &2026122022
 Transform:
   m_ObjectHideFlags: 0

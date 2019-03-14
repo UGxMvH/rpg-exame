@@ -22,25 +22,30 @@ public class CharacterManager : MonoBehaviour
     internal bool isDead = false;
 
     public bool isAI;
+    public LayerMask AiDetectLayer;
     public float runSpeed = 20.0f;
     public int health = 10;
     public UnityEngine.UI.Slider healthSlider;
 
     private void Start()
     {
+        // Gather components
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<CharacterAnimator>();
 
         if (healthSlider)
         {
+            // Set health slider values if there is a health slider
             healthSlider.minValue = 0;
             healthSlider.maxValue = health;
             healthSlider.value = health;
             currentHealth = health;
         }
 
+        // Check if is AI
         if (isAI)
         {
+            // Choose random direaction to walk to
             switch(Random.Range(0, 3))
             {
                 case 0:
@@ -56,11 +61,15 @@ public class CharacterManager : MonoBehaviour
                     horizontal = - 1;
                     break;
             }
+
+            // Start attacking
+            StartCoroutine(EnemyAttack());
         }
     }
 
     private void Update()
     {
+        // Check if is AI
         if (isAI)
         {
             UpdateAIMovement();
@@ -97,7 +106,7 @@ public class CharacterManager : MonoBehaviour
         RaycastHit2D hit;
 
         // Let's do some raycasts one needs to be filling in hit
-        if (hit = Physics2D.CircleCast((Vector2)transform.position + new Vector2(0, .2f), .2f, transform.up, .1f))
+        if (hit = Physics2D.CircleCast((Vector2)transform.position + new Vector2(0, .2f), .2f, transform.up, .1f, layerMask: AiDetectLayer))
         {
             if (currentDirection == Direction.North)
             {
@@ -106,19 +115,19 @@ public class CharacterManager : MonoBehaviour
             }
         }
 
-        if (currentDirection == Direction.East && (hit = Physics2D.CircleCast((Vector2)transform.position + new Vector2(.5f, -0.3f), .2f, transform.right, .2f)))
+        if (currentDirection == Direction.East && (hit = Physics2D.CircleCast((Vector2)transform.position + new Vector2(.5f, -0.3f), .2f, transform.right, .2f, layerMask: AiDetectLayer)))
         {
             horizontal = 0;
             vertical = -1;
         }
 
-        if (currentDirection == Direction.South && (hit = Physics2D.CircleCast((Vector2)transform.position + new Vector2(0, -.7f), .2f, -transform.up, .1f)))
+        if (currentDirection == Direction.South && (hit = Physics2D.CircleCast((Vector2)transform.position + new Vector2(0, -.7f), .2f, -transform.up, .1f, layerMask: AiDetectLayer)))
         {
             horizontal = -1;
             vertical = 0;
         }
 
-        if (currentDirection == Direction.West && (hit = Physics2D.CircleCast((Vector2)transform.position + new Vector2(-.5f, -0.3f), .2f, -transform.right, .2f)))
+        if (currentDirection == Direction.West && (hit = Physics2D.CircleCast((Vector2)transform.position + new Vector2(-.5f, -0.3f), .2f, -transform.right, .2f, layerMask: AiDetectLayer)))
         {
             horizontal = 0;
             vertical = 1;
@@ -187,11 +196,39 @@ public class CharacterManager : MonoBehaviour
         PoolManager.instance.InstantiateObject("Arrow", pos, rot);
     }
 
+    private IEnumerator EnemyAttack()
+    {
+        while (true)
+        {
+            // Wait for attack
+            yield return new WaitForSeconds(3);
+
+            // Attack animation
+            yield return StartCoroutine(animator.EnemyAttack());
+
+            // Attack 2 types
+            if (Random.Range(0, 100) % 2 == 0)
+            {
+                PoolManager.instance.InstantiateObject("Bullet", (Vector2)transform.position + new Vector2(0, 1), Quaternion.identity);
+                PoolManager.instance.InstantiateObject("Bullet", (Vector2)transform.position + new Vector2(1, 0), Quaternion.Euler(0, 0, -90));
+                PoolManager.instance.InstantiateObject("Bullet", (Vector2)transform.position + new Vector2(0, -1), Quaternion.Euler(0, 0, 180));
+                PoolManager.instance.InstantiateObject("Bullet", (Vector2)transform.position + new Vector2(-1, 0), Quaternion.Euler(0, 0, 90));
+            }
+            else
+            {
+                PoolManager.instance.InstantiateObject("Bullet", (Vector2)transform.position + new Vector2(1, 1), Quaternion.Euler(0, 0, 45));
+                PoolManager.instance.InstantiateObject("Bullet", (Vector2)transform.position + new Vector2(1, -1), Quaternion.Euler(0, 0, 135));
+                PoolManager.instance.InstantiateObject("Bullet", (Vector2)transform.position + new Vector2(-1, 1), Quaternion.Euler(0, 0, -45));
+                PoolManager.instance.InstantiateObject("Bullet", (Vector2)transform.position + new Vector2(-1, -1), Quaternion.Euler(0, 0, -135));
+            }
+        }
+    }
+
     // Update direction
     private void UpdateDirection()
     {
-        if (isAI)
-        {
+        /*if (true)
+        {*/
             // Get direction
             if (vertical > 0)
             {
@@ -209,7 +246,7 @@ public class CharacterManager : MonoBehaviour
             {
                 currentDirection = Direction.West;
             }
-        }
+        /*}
         else
         {
             // Get direction
@@ -229,7 +266,7 @@ public class CharacterManager : MonoBehaviour
             {
                 currentDirection = Direction.West;
             }
-        }
+        }*/
     }
 
     private void UpdateIdleState()
