@@ -10,21 +10,49 @@ public class CharacterManager : MonoBehaviour
     private Rigidbody2D body;
     private float lastVerticalInput;
     private float lastHorizontalInput;
+    public float currentHealth;
 
-    public Direction currentDirection;
-    public float horizontal;
-    public float vertical;
+    internal Direction currentDirection;
+    internal float horizontal;
+    internal float vertical;
     internal bool isIdle = true;
     internal bool isAttacking = false;
 
     public bool isAI;
     public float runSpeed = 20.0f;
+    public int health = 10;
+    public UnityEngine.UI.Slider healthSlider;
 
     private void Start()
     {
         body = GetComponent<Rigidbody2D>();
 
-        vertical = 1;
+        if (healthSlider)
+        {
+            healthSlider.minValue = 0;
+            healthSlider.maxValue = health;
+            healthSlider.value = health;
+            currentHealth = health;
+        }
+
+        if (isAI)
+        {
+            switch(Random.Range(0, 3))
+            {
+                case 0:
+                    vertical = 1;
+                    break;
+                case 1:
+                    horizontal = 1;
+                    break;
+                case 2:
+                    vertical = - 1;
+                    break;
+                case 3:
+                    horizontal = - 1;
+                    break;
+            }
+        }
     }
 
     private void Update()
@@ -233,5 +261,25 @@ public class CharacterManager : MonoBehaviour
         }
 
         body.velocity = new Vector2(movementX * runSpeed, movementY * runSpeed);
+    }
+
+    public void DoDamage(float damage)
+    {
+        float newHealth = currentHealth - damage;
+
+        if (newHealth <= 0)
+        {
+            // Dead
+
+            return;
+        }
+
+        // Damage
+        currentHealth = newHealth;
+
+        if (healthSlider)
+        {
+            healthSlider.value = currentHealth;
+        }
     }
 }

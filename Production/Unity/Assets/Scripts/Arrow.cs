@@ -7,6 +7,7 @@ using UnityEngine;
 public class Arrow : MonoBehaviour, PoolInterface
 {
     public float speed;
+    public float damage;
 
     public void OnStart()
     {
@@ -15,6 +16,16 @@ public class Arrow : MonoBehaviour, PoolInterface
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        CharacterManager character = collision.gameObject.GetComponent<CharacterManager>();
+
+        if (character)
+        {
+            // Damage character
+            Debug.Log("Do damage");
+            character.DoDamage(damage);
+        }
+
+        // Bye bye arrow
         gameObject.SetActive(false);
     }
 }
