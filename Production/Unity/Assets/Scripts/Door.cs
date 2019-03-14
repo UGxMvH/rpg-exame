@@ -17,7 +17,7 @@ public class Door : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.GetComponent<PlayerManager>() && room.doorsOpen)
+        if (collision.gameObject.GetComponent<CharacterManager>() && !collision.gameObject.GetComponent<CharacterManager>().isAI && room.doorsOpen)
         {
             room.LeaveRoom(this);
         }

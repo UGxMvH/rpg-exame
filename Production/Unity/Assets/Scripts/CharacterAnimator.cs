@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerManager))]
+[RequireComponent(typeof(CharacterManager))]
 [RequireComponent(typeof(SpriteRenderer))]
-public class HeroAnimations : MonoBehaviour
+public class CharacterAnimator : MonoBehaviour
 {
     #region Private Variables
     private new SpriteRenderer renderer;
-    private PlayerManager player;
+    private CharacterManager character;
     public Sprite[] usingArray = null;
     public int currentIndex = 0;
     #endregion
@@ -41,7 +41,7 @@ public class HeroAnimations : MonoBehaviour
     {
         // Gather required components
         renderer = GetComponent<SpriteRenderer>();
-        player = GetComponent<PlayerManager>();
+        character = GetComponent<CharacterManager>();
 
         // Start animation coroutine
         StartCoroutine(Animate());
@@ -59,24 +59,24 @@ public class HeroAnimations : MonoBehaviour
     private void UpdateSprite()
     {
         // Check if attacking
-        if (player.isAttacking)
+        if (character.isAttacking)
         {
-            if (player.currentDirection == PlayerManager.Direction.North)
+            if (character.currentDirection == CharacterManager.Direction.North)
             {
                 updateArray(attackArrowNorth);
                 renderer.flipX = false;
             }
-            else if (player.currentDirection == PlayerManager.Direction.South)
+            else if (character.currentDirection == CharacterManager.Direction.South)
             {
                 updateArray(attackArrowSouth);
                 renderer.flipX = false;
             }
-            else if (player.currentDirection == PlayerManager.Direction.East)
+            else if (character.currentDirection == CharacterManager.Direction.East)
             {
                 updateArray(attackArrowEast);
                 renderer.flipX = false;
             }
-            else if (player.currentDirection == PlayerManager.Direction.West)
+            else if (character.currentDirection == CharacterManager.Direction.West)
             {
                 // Check if there is a west sprite otherwise use flip
                 if (idleWest)
@@ -90,24 +90,24 @@ public class HeroAnimations : MonoBehaviour
                     renderer.flipX = true;
                 }
             }
-        } else if (player.isIdle) {
-            // Player is idle so get idle animation
-            if (player.currentDirection == PlayerManager.Direction.North)
+        } else if (character.isIdle) {
+            // character is idle so get idle animation
+            if (character.currentDirection == CharacterManager.Direction.North)
             {
                 renderer.sprite = idleNorth;
                 renderer.flipX = false;
             }
-            else if (player.currentDirection == PlayerManager.Direction.South)
+            else if (character.currentDirection == CharacterManager.Direction.South)
             {
                 renderer.sprite = idleSouth;
                 renderer.flipX = false;
             }
-            else if (player.currentDirection == PlayerManager.Direction.East)
+            else if (character.currentDirection == CharacterManager.Direction.East)
             {
                 renderer.sprite = idleEast;
                 renderer.flipX = false;
             }
-            else if (player.currentDirection == PlayerManager.Direction.West)
+            else if (character.currentDirection == CharacterManager.Direction.West)
             {
                 // Check if there is a west sprite otherwise use flip
                 if (idleWest)
@@ -126,22 +126,22 @@ public class HeroAnimations : MonoBehaviour
         else
         {
             // Get correct array
-            if (player.currentDirection == PlayerManager.Direction.North)
+            if (character.currentDirection == CharacterManager.Direction.North)
             {
                 updateArray(walkNorth);
                 renderer.flipX = false;
             }
-            else if (player.currentDirection == PlayerManager.Direction.South)
+            else if (character.currentDirection == CharacterManager.Direction.South)
             {
                 updateArray(walkSouth);
                 renderer.flipX = false;
             }
-            else if (player.currentDirection == PlayerManager.Direction.East)
+            else if (character.currentDirection == CharacterManager.Direction.East)
             {
                 updateArray(walkEast);
                 renderer.flipX = false;
             }
-            else if (player.currentDirection == PlayerManager.Direction.West)
+            else if (character.currentDirection == CharacterManager.Direction.West)
             {
                 // Check if there is a west sprite otherwise use flip
                 if (idleWest)
@@ -173,22 +173,28 @@ public class HeroAnimations : MonoBehaviour
         while(true)
         {
             // Check if we have all conditions to know that we are running
-            if ((!player.isIdle || player.isAttacking) && usingArray != null)
+            if ((!character.isIdle || character.isAttacking) && usingArray != null)
             {
                 // Check if index is within range
                 if (currentIndex >= usingArray.Length)
                 {
                     currentIndex = 0;
                     
-                    if (player.isAttacking)
+                    if (character.isAttacking)
                     {
-                        player.isAttacking = false;
+                        character.isAttacking = false;
                         continue;
                     }
                 }
 
                 // Animate
-                renderer.sprite = usingArray[currentIndex];
+                if (usingArray != null)
+                {
+                    if (usingArray.Length > 0)
+                    {
+                        renderer.sprite = usingArray[currentIndex];
+                    }
+                }
 
                 // Count index up
                 currentIndex++;

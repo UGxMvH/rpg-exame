@@ -5,7 +5,7 @@ using UnityEngine;
 public class Room : MonoBehaviour
 {
     // Private variables
-    private List<EnemyManager> enemies = new List<EnemyManager>();
+    private List<CharacterManager> enemies = new List<CharacterManager>();
 
     private Door northDoor;
     private Door eastDoor;
@@ -113,7 +113,10 @@ public class Room : MonoBehaviour
                 // create enemy in room
                 GameObject prefab = myGenerator.enemies[Random.Range(0, myGenerator.enemies.Length)];
 
-                EnemyManager enemy = Instantiate(prefab, Vector2.zero, Quaternion.identity, transform).GetComponent<EnemyManager>();
+                // Choose location
+                Vector2 pos = new Vector2(Random.Range(2, size.x - 2), Random.Range(2, size.y - 2));
+
+                CharacterManager enemy = Instantiate(prefab, pos, Quaternion.identity, transform).GetComponent<CharacterManager>();
 
                 enemies.Add(enemy);
             }
