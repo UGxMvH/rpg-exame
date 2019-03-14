@@ -9,14 +9,15 @@ public class CharacterAnimator : MonoBehaviour
     #region Private Variables
     private new SpriteRenderer renderer;
     private CharacterManager character;
-    public Sprite[] usingArray = null;
-    public int currentIndex = 0;
+    private Sprite[] usingArray = null;
+    private int currentIndex = 0;
     #endregion
 
     #region Public Variables
     [Header("Settings")]
     [Range(0.1f, 0.5f)]
     public float animationSpeed;
+    public Color hitColor;
 
     [Header("Idle sprites")]
     public Sprite idleNorth;
@@ -35,6 +36,9 @@ public class CharacterAnimator : MonoBehaviour
     public Sprite[] attackArrowEast;
     public Sprite[] attackArrowSouth;
     public Sprite[] attackArrowWest;
+
+    [Header("Dead sprites")]
+    public Sprite[] dieSprites;
     #endregion
 
     private void Start()
@@ -46,8 +50,7 @@ public class CharacterAnimator : MonoBehaviour
         // Start animation coroutine
         StartCoroutine(Animate());
     }
-
-    #region Update methods
+    
     // Update animations each frame.
     private void Update()
     {
@@ -58,6 +61,12 @@ public class CharacterAnimator : MonoBehaviour
     // Animate
     private void UpdateSprite()
     {
+        // Check if not dead
+        if (character.isDead)
+        {
+            return;
+        }
+
         // Check if attacking
         if (character.isAttacking)
         {
@@ -160,11 +169,14 @@ public class CharacterAnimator : MonoBehaviour
 
     private void updateArray(Sprite[] newArray)
     {
+        // Check if array is diffrent
         if (newArray != usingArray)
         {
+            // Start from beginning
             currentIndex = 0;
         }
 
+        // Use new array
         usingArray = newArray;
     }
 
@@ -173,13 +185,21 @@ public class CharacterAnimator : MonoBehaviour
         while(true)
         {
             // Check if we have all conditions to know that we are running
-            if ((!character.isIdle || character.isAttacking) && usingArray != null)
+            if ((!character.isIdle || character.isAttacking || character.isDead) && usingArray != null)
             {
                 // Check if index is within range
                 if (currentIndex >= usingArray.Length)
                 {
+                    // Check if is A.I. That died
+                    if (character.isAI && character.isDead)
+                    {
+                        gameObject.SetActive(false);
+                    }
+
+                    // Reset index
                     currentIndex = 0;
                     
+                    // Reset attacking
                     if (character.isAttacking)
                     {
                         character.isAttacking = false;
@@ -203,5 +223,30 @@ public class CharacterAnimator : MonoBehaviour
             yield return new WaitForSeconds(animationSpeed);
         }
     }
-    #endregion
+
+    public void Die()
+    {
+        // Update using array
+        updateArray(dieSprites);
+    }
+
+    public IEnumerator GotHit()
+    {
+        // Keep normal color in mind
+        Color prevColor = renderer.material.color;
+
+        // Change color to hit
+        renderer.color = hitColor;
+
+        // Keep this color a little while
+        yield return new WaitForSeconds(.25f);
+
+        // Change color back
+        renderer.color = prevColor;
+    }
+
+    public IEnumerator EnemyAttack()
+    {
+        yield return new WaitForEndOfFrame();
+    }
 }

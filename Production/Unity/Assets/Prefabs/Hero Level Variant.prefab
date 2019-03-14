@@ -84,6 +84,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 825246945731943555, guid: 4ceaa6c558e54a14891e48e6191501cd,
         type: 3}
+      propertyPath: m_ColliderPaths.Array.data[0].m_Collider
+      value: 
+      objectReference: {fileID: 776143146089496254}
+    - target: {fileID: 825246945731943555, guid: 4ceaa6c558e54a14891e48e6191501cd,
+        type: 3}
       propertyPath: m_ColliderPaths.Array.data[0].m_ColliderPaths.Array.data[0].Array.data[0].X
       value: 2500000
       objectReference: {fileID: 0}
@@ -166,7 +171,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 0f4808973e1e4f142bfbe4a6cd05ea54, type: 2}
+      objectReference: {fileID: 2100000, guid: a7ea603491c0674418e5809b982e9a0f, type: 2}
     - target: {fileID: 825246945731943561, guid: 4ceaa6c558e54a14891e48e6191501cd,
         type: 3}
       propertyPath: runSpeed
@@ -174,3 +179,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ceaa6c558e54a14891e48e6191501cd, type: 3}
+--- !u!61 &776143146089496254 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 825246945731943564, guid: 4ceaa6c558e54a14891e48e6191501cd,
+    type: 3}
+  m_PrefabInstance: {fileID: 123487996842385970}
+  m_PrefabAsset: {fileID: 0}

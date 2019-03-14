@@ -3,20 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(CharacterAnimator))]
 public class CharacterManager : MonoBehaviour
 {
     public enum Direction { North, East, South, West };
 
     private Rigidbody2D body;
+    private CharacterAnimator animator;
     private float lastVerticalInput;
     private float lastHorizontalInput;
-    public float currentHealth;
+    private float currentHealth;
 
     internal Direction currentDirection;
     internal float horizontal;
     internal float vertical;
     internal bool isIdle = true;
     internal bool isAttacking = false;
+    internal bool isDead = false;
 
     public bool isAI;
     public float runSpeed = 20.0f;
@@ -26,6 +29,7 @@ public class CharacterManager : MonoBehaviour
     private void Start()
     {
         body = GetComponent<Rigidbody2D>();
+        animator = GetComponent<CharacterAnimator>();
 
         if (healthSlider)
         {
@@ -116,7 +120,6 @@ public class CharacterManager : MonoBehaviour
 
         if (currentDirection == Direction.West && (hit = Physics2D.CircleCast((Vector2)transform.position + new Vector2(-.5f, -0.3f), .2f, -transform.right, .2f)))
         {
-            Debug.Log(hit.transform.name);
             horizontal = 0;
             vertical = 1;
         }
@@ -263,6 +266,27 @@ public class CharacterManager : MonoBehaviour
         body.velocity = new Vector2(movementX * runSpeed, movementY * runSpeed);
     }
 
+    private void Dead()
+    {
+        if (isAI)
+        {
+            // Dead
+            isDead = true;
+
+            // Hide healthbar
+            healthSlider.gameObject.SetActive(false);
+
+            // Stop movement
+            horizontal = 0;
+            vertical = 0;
+
+            // Animate dead
+            animator.Die();
+
+            // Tell room i'm dead
+        }
+    }
+
     public void DoDamage(float damage)
     {
         float newHealth = currentHealth - damage;
@@ -270,6 +294,10 @@ public class CharacterManager : MonoBehaviour
         if (newHealth <= 0)
         {
             // Dead
+            if (healthSlider)
+            {
+                Dead();
+            }
 
             return;
         }
@@ -281,5 +309,8 @@ public class CharacterManager : MonoBehaviour
         {
             healthSlider.value = currentHealth;
         }
+
+        // Show hit
+        StartCoroutine(animator.GotHit());
     }
 }
