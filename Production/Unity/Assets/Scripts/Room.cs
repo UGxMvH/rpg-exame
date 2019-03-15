@@ -117,6 +117,7 @@ public class Room : MonoBehaviour
                 Vector2 pos = new Vector2(Random.Range(2, size.x - 2), Random.Range(2, size.y - 2));
 
                 CharacterManager enemy = Instantiate(prefab, pos, Quaternion.identity, transform).GetComponent<CharacterManager>();
+                enemy.AiRoom = this;
 
                 enemies.Add(enemy);
             }
@@ -181,6 +182,16 @@ public class Room : MonoBehaviour
         }
 
         StartCoroutine(UnlockAlldoors());
+    }
+
+    public void EnemyDied(CharacterManager enemy)
+    {
+        enemies.Remove(enemy);
+
+        if (enemies.Count == 0)
+        {
+            OpenDoors();
+        }
     }
 
     private IEnumerator UnlockAlldoors()

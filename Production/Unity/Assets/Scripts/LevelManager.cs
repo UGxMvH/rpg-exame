@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
@@ -77,8 +78,14 @@ public class LevelManager : MonoBehaviour
         // Fluid fill rooms
         yield return StartCoroutine(GenerateRoom(Vector2.zero));
 
+        // Safety fallback
+        if (rooms.Count < minRooms)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
         // Rooms are generated let them finish and generate doors
-        foreach(KeyValuePair<Vector2, Room> room in rooms)
+        foreach (KeyValuePair<Vector2, Room> room in rooms)
         {
             // Diffrent kind of rooms
             if (room.Key != Vector2.zero)

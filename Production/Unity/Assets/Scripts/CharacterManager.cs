@@ -13,6 +13,7 @@ public class CharacterManager : MonoBehaviour
     private float lastVerticalInput;
     private float lastHorizontalInput;
     private float currentHealth;
+    private int coins;
 
     internal Direction currentDirection;
     internal float horizontal;
@@ -23,9 +24,11 @@ public class CharacterManager : MonoBehaviour
 
     public bool isAI;
     public LayerMask AiDetectLayer;
+    public Room AiRoom;
     public float runSpeed = 20.0f;
     public int health = 10;
     public UnityEngine.UI.Slider healthSlider;
+    public UnityEngine.UI.Text coinText;
 
     private void Start()
     {
@@ -201,7 +204,7 @@ public class CharacterManager : MonoBehaviour
         while (true)
         {
             // Wait for attack
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(Random.Range(.5f, 2f));
 
             // Attack animation
             yield return StartCoroutine(animator.EnemyAttack());
@@ -216,10 +219,10 @@ public class CharacterManager : MonoBehaviour
             }
             else
             {
-                PoolManager.instance.InstantiateObject("Bullet", (Vector2)transform.position + new Vector2(1, 1), Quaternion.Euler(0, 0, 45));
-                PoolManager.instance.InstantiateObject("Bullet", (Vector2)transform.position + new Vector2(1, -1), Quaternion.Euler(0, 0, 135));
-                PoolManager.instance.InstantiateObject("Bullet", (Vector2)transform.position + new Vector2(-1, 1), Quaternion.Euler(0, 0, -45));
-                PoolManager.instance.InstantiateObject("Bullet", (Vector2)transform.position + new Vector2(-1, -1), Quaternion.Euler(0, 0, -135));
+                PoolManager.instance.InstantiateObject("Bullet", (Vector2)transform.position + new Vector2(-1, 1), Quaternion.Euler(0, 0, 45));
+                PoolManager.instance.InstantiateObject("Bullet", (Vector2)transform.position + new Vector2(-1, -1), Quaternion.Euler(0, 0, 135));
+                PoolManager.instance.InstantiateObject("Bullet", (Vector2)transform.position + new Vector2(1, 1), Quaternion.Euler(0, 0, -45));
+                PoolManager.instance.InstantiateObject("Bullet", (Vector2)transform.position + new Vector2(1, -1), Quaternion.Euler(0, 0, -135));
             }
         }
     }
@@ -227,51 +230,28 @@ public class CharacterManager : MonoBehaviour
     // Update direction
     private void UpdateDirection()
     {
-        /*if (true)
-        {*/
-            // Get direction
-            if (vertical > 0)
-            {
-                currentDirection = Direction.North;
-            }
-            else if (vertical < 0)
-            {
-                currentDirection = Direction.South;
-            }
-            else if (horizontal > 0)
-            {
-                currentDirection = Direction.East;
-            }
-            else if (horizontal < 0)
-            {
-                currentDirection = Direction.West;
-            }
-        /*}
-        else
+        // Get direction
+        if (vertical > 0)
         {
-            // Get direction
-            if (body.velocity.y > 0)
-            {
-                currentDirection = Direction.North;
-            }
-            else if (body.velocity.y < 0)
-            {
-                currentDirection = Direction.South;
-            }
-            else if (body.velocity.x > 0)
-            {
-                currentDirection = Direction.East;
-            }
-            else if (body.velocity.x < 0)
-            {
-                currentDirection = Direction.West;
-            }
-        }*/
+            currentDirection = Direction.North;
+        }
+        else if (vertical < 0)
+        {
+            currentDirection = Direction.South;
+        }
+        else if (horizontal > 0)
+        {
+            currentDirection = Direction.East;
+        }
+        else if (horizontal < 0)
+        {
+            currentDirection = Direction.West;
+        }
     }
 
     private void UpdateIdleState()
     {
-        if (body.velocity.y == 0 && body.velocity.x == 0)
+        if (body.velocity == Vector2.zero)
         {
             isIdle = true;
         }
@@ -316,11 +296,19 @@ public class CharacterManager : MonoBehaviour
             // Stop movement
             horizontal = 0;
             vertical = 0;
+            body.velocity = Vector2.zero;
+
+            // Tell room i'm dead
+            AiRoom.EnemyDied(this);
+
+            // Drop coin
+            if (Random.Range(0, 100) > 25)
+            {
+                PoolManager.instance.InstantiateObject("Coin", transform.position, Quaternion.identity);
+            }
 
             // Animate dead
             animator.Die();
-
-            // Tell room i'm dead
         }
     }
 
@@ -349,5 +337,15 @@ public class CharacterManager : MonoBehaviour
 
         // Show hit
         StartCoroutine(animator.GotHit());
+    }
+
+    public void AddCoin(int amount = 1)
+    {
+        coins += amount;
+
+        if (coinText)
+        {
+            coinText.text = coins.ToString("000");
+        }
     }
 }

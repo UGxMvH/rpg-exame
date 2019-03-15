@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 825246945731943562, guid: 4ceaa6c558e54a14891e48e6191501cd,
         type: 3}
       propertyPath: m_Name
-      value: Hero Level Variant
+      value: Hero Level
       objectReference: {fileID: 0}
     - target: {fileID: 825246945731943567, guid: 4ceaa6c558e54a14891e48e6191501cd,
         type: 3}
@@ -72,6 +72,11 @@ PrefabInstance:
       propertyPath: m_ColliderPaths.Array.data[0].m_Collider
       value: 
       objectReference: {fileID: 776143146089496254}
+    - target: {fileID: 825246945731943561, guid: 4ceaa6c558e54a14891e48e6191501cd,
+        type: 3}
+      propertyPath: healthSlider
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ceaa6c558e54a14891e48e6191501cd, type: 3}
 --- !u!61 &776143146089496254 stripped
