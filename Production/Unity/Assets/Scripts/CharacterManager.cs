@@ -230,22 +230,45 @@ public class CharacterManager : MonoBehaviour
     // Update direction
     private void UpdateDirection()
     {
-        // Get direction
-        if (vertical > 0)
+        if (isAI || body.velocity == Vector2.zero)
         {
-            currentDirection = Direction.North;
+            // Get direction
+            if (vertical > 0)
+            {
+                currentDirection = Direction.North;
+            }
+            else if (vertical < 0)
+            {
+                currentDirection = Direction.South;
+            }
+            else if (horizontal > 0)
+            {
+                currentDirection = Direction.East;
+            }
+            else if (horizontal < 0)
+            {
+                currentDirection = Direction.West;
+            }
         }
-        else if (vertical < 0)
+        else
         {
-            currentDirection = Direction.South;
-        }
-        else if (horizontal > 0)
-        {
-            currentDirection = Direction.East;
-        }
-        else if (horizontal < 0)
-        {
-            currentDirection = Direction.West;
+            // Get direction
+            if (body.velocity.y > 0)
+            {
+                currentDirection = Direction.North;
+            }
+            else if (body.velocity.y < 0)
+            {
+                currentDirection = Direction.South;
+            }
+            else if (body.velocity.x > 0)
+            {
+                currentDirection = Direction.East;
+            }
+            else if (body.velocity.x < 0)
+            {
+                currentDirection = Direction.West;
+            }
         }
     }
 
@@ -304,7 +327,7 @@ public class CharacterManager : MonoBehaviour
             // Drop coin
             if (Random.Range(0, 100) > 25)
             {
-                PoolManager.instance.InstantiateObject("Coin", transform.position, Quaternion.identity);
+                PoolManager.instance.InstantiateObject("Coin", transform.position, Quaternion.identity, LevelManager.instace.currentRoom.transform);
             }
 
             // Animate dead

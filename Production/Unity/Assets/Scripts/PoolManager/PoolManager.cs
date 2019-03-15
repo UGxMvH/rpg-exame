@@ -36,7 +36,7 @@ public class PoolManager : MonoBehaviour
         }
     }
 
-    public void InstantiateObject(string nameTag, Vector2 pos, Quaternion rot)
+    public void InstantiateObject(string nameTag, Vector2 pos, Quaternion rot, Transform parent = null)
     {
         // Get item of queue
         GameObject go = (GameObject)createdPools[nameTag].Dequeue();
@@ -45,6 +45,7 @@ public class PoolManager : MonoBehaviour
         go.SetActive(true);
         go.transform.position = pos;
         go.transform.rotation = rot;
+        go.transform.SetParent(parent);
 
         // Call onstart
         if (go.GetComponent<PoolInterface>() != null)

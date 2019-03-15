@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
+    public static LevelManager instace;
     public Dictionary<Vector2, Room> rooms = new Dictionary<Vector2, Room>();
 
     private bool transisting = false;
@@ -39,6 +40,14 @@ public class LevelManager : MonoBehaviour
 
     [Header("Transistion")]
     public RectTransform circle;
+
+    [HideInInspector]
+    public Room currentRoom;
+
+    private void Awake()
+    {
+        instace = this;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -294,6 +303,9 @@ public class LevelManager : MonoBehaviour
             camera.offset = new Vector2(sizeX / 2, sizeY / 2);
 
             camera.GetComponent<Camera>().orthographicSize = sizeY / 2 + 2;
+
+            // Set current room
+            currentRoom = room;
         }
         else
         {
@@ -391,6 +403,8 @@ public class LevelManager : MonoBehaviour
         }
 
         yield return new WaitForSeconds(.5f);
+
+        currentRoom = to;
 
         // Hide circle
         yield return StartCoroutine(TransitionManager.instance.CircleAnimate(false));
