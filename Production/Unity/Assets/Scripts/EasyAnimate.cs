@@ -10,12 +10,21 @@ public class EasyAnimate : MonoBehaviour
 
     private int currentIndex = 0;
     private new SpriteRenderer renderer;
+    private Coroutine co;
 
     private void Start()
     {
         renderer = GetComponent<SpriteRenderer>();
+    }
 
-        StartCoroutine(Animate());
+    private void OnEnable()
+    {
+        co = StartCoroutine(Animate());
+    }
+
+    private void OnDisable()
+    {
+        StopCoroutine(Animate());
     }
 
     private IEnumerator Animate()
@@ -27,7 +36,10 @@ public class EasyAnimate : MonoBehaviour
                 currentIndex = 0;
             }
 
-            renderer.sprite = sprites[currentIndex];
+            if (renderer)
+            {
+                renderer.sprite = sprites[currentIndex];
+            }
 
             currentIndex++;
 

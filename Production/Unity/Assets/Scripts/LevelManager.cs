@@ -82,6 +82,18 @@ public class LevelManager : MonoBehaviour
         StartCoroutine(TransistRooms(from, to));
     }
 
+    public void RetryLevel()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void BackToOverworld()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(1);
+    }
+
     private IEnumerator GenerateLevel()
     {
         // Fluid fill rooms

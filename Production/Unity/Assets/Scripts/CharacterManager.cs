@@ -1,6 +1,7 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CharacterAnimator))]
@@ -21,14 +22,17 @@ public class CharacterManager : MonoBehaviour
     internal bool isIdle = true;
     internal bool isAttacking = false;
     internal bool isDead = false;
+    internal bool usingMobile = false;
+    internal Room AiRoom;
 
+    [Header("Settings")]
     public bool isAI;
     public LayerMask AiDetectLayer;
-    public Room AiRoom;
     public float runSpeed = 20.0f;
     public int health = 10;
-    public UnityEngine.UI.Slider healthSlider;
-    public UnityEngine.UI.Text coinText;
+    public Slider healthSlider;
+    public Text coinText;
+    public CanvasGroup diedWindow;
 
     private void Start()
     {
@@ -88,8 +92,11 @@ public class CharacterManager : MonoBehaviour
             // Gives a value between -1 and 1
             if (!isAttacking)
             {
-                horizontal = Input.GetAxisRaw("Horizontal"); // -1 is left
-                vertical = Input.GetAxisRaw("Vertical"); // -1 is down
+                if (!usingMobile)
+                {
+                    horizontal = Input.GetAxisRaw("Horizontal"); // -1 is left
+                    vertical = Input.GetAxisRaw("Vertical"); // -1 is down
+                }
             }
             else
             {
@@ -106,6 +113,9 @@ public class CharacterManager : MonoBehaviour
 
     private void UpdateAIMovement()
     {
+        // Don't do when enemy is dead
+        if (isDead) return;
+
         RaycastHit2D hit;
 
         // Let's do some raycasts one needs to be filling in hit
@@ -124,7 +134,7 @@ public class CharacterManager : MonoBehaviour
             vertical = -1;
         }
 
-        if (currentDirection == Direction.South && (hit = Physics2D.CircleCast((Vector2)transform.position + new Vector2(0, -.7f), .2f, -transform.up, .1f, layerMask: AiDetectLayer)))
+        if (currentDirection == Direction.South && (hit = Physics2D.CircleCast((Vector2)transform.position + new Vector2(0, -.75f), .2f, -transform.up, .1f, layerMask: AiDetectLayer)))
         {
             horizontal = -1;
             vertical = 0;
@@ -166,7 +176,7 @@ public class CharacterManager : MonoBehaviour
         }
     }
 
-    private IEnumerator PlayerAttack()
+    public IEnumerator PlayerAttack()
     {
         yield return new WaitForSeconds(.3f);
 
@@ -333,6 +343,14 @@ public class CharacterManager : MonoBehaviour
             // Animate dead
             animator.Die();
         }
+        else
+        {
+            // Player died
+            Time.timeScale = 0;
+            diedWindow.gameObject.SetActive(true);
+            diedWindow.GetComponent<RectTransform>().DOAnchorPosY(0, 1);
+            diedWindow.DOFade(1, 1);
+        }
     }
 
     public void DoDamage(float damage)
@@ -341,13 +359,11 @@ public class CharacterManager : MonoBehaviour
 
         if (newHealth <= 0)
         {
-            // Dead
-            if (healthSlider)
-            {
-                Dead();
-            }
+            // Health = 0
+            newHealth = 0;
 
-            return;
+            // Dead
+            Dead();
         }
 
         // Damage
@@ -359,7 +375,10 @@ public class CharacterManager : MonoBehaviour
         }
 
         // Show hit
-        StartCoroutine(animator.GotHit());
+        if (currentHealth != 0)
+        {
+            StartCoroutine(animator.GotHit());
+        }
     }
 
     public void AddCoin(int amount = 1)
