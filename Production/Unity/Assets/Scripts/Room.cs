@@ -117,9 +117,13 @@ public class Room : MonoBehaviour
                 Vector2 pos = new Vector2(Random.Range(2, size.x - 2), Random.Range(2, size.y - 2));
 
                 CharacterManager enemy = Instantiate(prefab, pos, Quaternion.identity, transform).GetComponent<CharacterManager>();
-                enemy.AiRoom = this;
 
-                enemies.Add(enemy);
+                if (enemy)
+                {
+                    enemy.AiRoom = this;
+
+                    enemies.Add(enemy);
+                }
             }
         }
     }

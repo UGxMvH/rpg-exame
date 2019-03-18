@@ -7,6 +7,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(CharacterAnimator))]
 public class CharacterManager : MonoBehaviour
 {
+    public static CharacterManager player;
     public enum Direction { North, East, South, West };
 
     private Rigidbody2D body;
@@ -33,6 +34,14 @@ public class CharacterManager : MonoBehaviour
     public Slider healthSlider;
     public Text coinText;
     public CanvasGroup diedWindow;
+
+    private void Awake()
+    {
+        if (!isAI)
+        {
+            player = this;
+        }
+    }
 
     private void Start()
     {

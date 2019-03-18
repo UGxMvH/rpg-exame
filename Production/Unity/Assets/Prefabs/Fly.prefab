@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 99329121957855987}
   - component: {fileID: 7336989386473017883}
   - component: {fileID: 8474571350370685427}
+  - component: {fileID: 1476631098}
+  - component: {fileID: 1476631102}
   m_Layer: 0
   m_Name: Fly
   m_TagString: Untagged
@@ -69,7 +71,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 7
   m_Sprite: {fileID: 21300002, guid: 9d9fef59c4b11f3498d551fe20fc382b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -91,7 +93,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -125,3 +127,57 @@ MonoBehaviour:
   - {fileID: 21300002, guid: 9d9fef59c4b11f3498d551fe20fc382b, type: 3}
   - {fileID: 21300004, guid: 9d9fef59c4b11f3498d551fe20fc382b, type: 3}
   - {fileID: 21300006, guid: 9d9fef59c4b11f3498d551fe20fc382b, type: 3}
+--- !u!50 &1476631098
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1374073392719340666}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
+--- !u!114 &1476631102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1374073392719340666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391cbc842d0be7d4098214d4144bf463, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  range: 3
+  speed: 15
+  damage: 7.5
+  left:
+  - {fileID: 21300000, guid: 9d9fef59c4b11f3498d551fe20fc382b, type: 3}
+  - {fileID: 21300002, guid: 9d9fef59c4b11f3498d551fe20fc382b, type: 3}
+  - {fileID: 21300004, guid: 9d9fef59c4b11f3498d551fe20fc382b, type: 3}
+  - {fileID: 21300006, guid: 9d9fef59c4b11f3498d551fe20fc382b, type: 3}
+  right:
+  - {fileID: 21300008, guid: 9d9fef59c4b11f3498d551fe20fc382b, type: 3}
+  - {fileID: 21300010, guid: 9d9fef59c4b11f3498d551fe20fc382b, type: 3}
+  - {fileID: 21300012, guid: 9d9fef59c4b11f3498d551fe20fc382b, type: 3}
+  - {fileID: 21300014, guid: 9d9fef59c4b11f3498d551fe20fc382b, type: 3}
+  dead:
+  - {fileID: 21300000, guid: 56acb1bfd0b1049e89df9be859dc3615, type: 3}
+  - {fileID: 21300000, guid: 251925328a35b4b1f86bc7bfc46ba9a3, type: 3}
+  - {fileID: 21300000, guid: 39863dd113769499488ded9f37cd3ef4, type: 3}
+  - {fileID: 21300000, guid: 37a2d4b7807fb4089a452e9a68acc935, type: 3}
+  - {fileID: 21300000, guid: 53a1842734d514cbaa3c63fb01b8a2e5, type: 3}
+  - {fileID: 21300000, guid: 071c2f3c390094fbe96e77d4670007d0, type: 3}

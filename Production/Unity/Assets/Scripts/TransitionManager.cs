@@ -7,6 +7,7 @@ public class TransitionManager : MonoBehaviour
     public static TransitionManager instance;
 
     public RectTransform circle;
+    public bool transistioning = false;
 
     private void Awake()
     {
@@ -32,6 +33,8 @@ public class TransitionManager : MonoBehaviour
 
     public IEnumerator CircleAnimate(bool animateIn)
     {
+        transistioning = true;
+
         if (animateIn)
         {
             while (circle.localScale.x > 0)
@@ -59,5 +62,7 @@ public class TransitionManager : MonoBehaviour
                 yield return new WaitForSeconds(0.01f);
             }
         }
+
+        transistioning = false;
     }
 }
