@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -37,8 +36,6 @@ public class FlyEnemy : MonoBehaviour
         {
             Vector2 v2 = target.position - transform.position;
             float angle = Mathf.Atan2(v2.y, v2.x) * Mathf.Rad2Deg;
-
-            Debug.Log(angle);
 
             rb.velocity = DegreeToVector2(angle);
 
@@ -103,7 +100,7 @@ public class FlyEnemy : MonoBehaviour
 
         animator.sprites = dead;
 
-        yield return new WaitForSeconds(animator.speed * dead.Length);
+        yield return new WaitForSeconds(animator.speed * (dead.Length - 1));
 
         gameObject.SetActive(false);
     }

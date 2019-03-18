@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,7 +9,7 @@ public class LevelManager : MonoBehaviour
     public static LevelManager instace;
     public Dictionary<Vector2, Room> rooms = new Dictionary<Vector2, Room>();
 
-    private bool transisting = false;
+    private bool hasShop = false;
 
     [Header("Settings")]
     public int minSize;
@@ -17,6 +18,8 @@ public class LevelManager : MonoBehaviour
     public int minRooms = 5;
     public new SmoothCamera camera;
     public Transform player;
+    public GameObject shop;
+    public bool debugShop;
 
     [Header("Tiles")]
     public GameObject[] floorTiles;
@@ -105,11 +108,27 @@ public class LevelManager : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
+        // Choose random room that is going to be the shop
+        if (debugShop)
+        {
+            rooms.Values.ElementAt(1).isShopRoom = true;
+        }
+        else
+        {
+            int lowestRoom = minRooms - 2;
+            if (lowestRoom <= 0)
+            {
+                lowestRoom = 1;
+            }
+
+            rooms.Values.ElementAt(Random.Range(lowestRoom, rooms.Count - 1)).isShopRoom = true;
+        }
+
         // Rooms are generated let them finish and generate doors
         foreach (KeyValuePair<Vector2, Room> room in rooms)
         {
             // Diffrent kind of rooms
-            if (room.Key != Vector2.zero)
+            if (room.Key != Vector2.zero && !room.Value.isShopRoom)
             {
                 room.Value.containsEnemies = true;
             }
@@ -372,12 +391,10 @@ public class LevelManager : MonoBehaviour
 
     private IEnumerator TransistRooms(Room from, Room to)
     {
-        if (transisting)
+        if (TransitionManager.instance.transistioning)
         {
             yield break;
         }
-
-        transisting = true;
 
         // Spawn in circle
         yield return StartCoroutine(TransitionManager.instance.CircleAnimate(true));
@@ -420,8 +437,6 @@ public class LevelManager : MonoBehaviour
 
         // Hide circle
         yield return StartCoroutine(TransitionManager.instance.CircleAnimate(false));
-
-        transisting = false;
 
         to.EnteredRoom();
     }

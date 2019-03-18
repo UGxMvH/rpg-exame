@@ -1,15 +1,18 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
-public class EasyAnimate : MonoBehaviour
+[RequireComponent(typeof(BoxCollider2D))]
+public class SpikeTrap : MonoBehaviour
 {
-    private int currentIndex = 0;
-    private new SpriteRenderer renderer;
     private Coroutine co;
+    private new SpriteRenderer renderer;
+    private int currentIndex;
 
-    public float speed = 0.1f;
     public Sprite[] sprites;
+    public float speed = 0.1f;
+    public float delay = 2;
 
     private void Start()
     {
@@ -28,16 +31,22 @@ public class EasyAnimate : MonoBehaviour
 
     private IEnumerator Animate()
     {
-        while(true)
+        while (true)
         {
             if (currentIndex >= sprites.Length)
             {
                 currentIndex = 0;
+                yield return new WaitForSeconds(delay);
             }
 
             if (renderer)
             {
                 renderer.sprite = sprites[currentIndex];
+            }
+
+            if (currentIndex == 0)
+            {
+                yield return new WaitForSeconds(delay);
             }
 
             currentIndex++;

@@ -25,10 +25,10 @@ public class Room : MonoBehaviour
     public Room southRoom;
     public Room westRoom;
 
-    public GameObject walls;
-    public GameObject doors;
-    public GameObject floor;
-    public GameObject traps;
+    public Transform walls;
+    public Transform doors;
+    public Transform floor;
+    public Transform traps;
 
     public bool doorsOpen;
 
@@ -40,9 +40,34 @@ public class Room : MonoBehaviour
     // Level generated now finalize rooms
     public void Finish()
     {
+        if (isShopRoom)
+        {
+            ReplaceWithShop();
+        }
+
         GetNeighbors();
         CreateDoors();
         SetUpRoom();
+    }
+
+    private void ReplaceWithShop()
+    {
+        // Remove all childs
+        for (int i = transform.childCount - 1; i >= 0; i--)
+        {
+            Debug.Log(i);
+            Destroy(transform.GetChild(i).gameObject);
+        }
+
+        // Add shop room
+        Transform trans = Instantiate(myGenerator.shop, transform).transform;
+
+        walls = trans.GetChild(0);
+        doors = trans.GetChild(1);
+        floor = trans.GetChild(2);
+        traps = trans.GetChild(3);
+
+        size = new Vector2(11, 9);
     }
 
     private void GetNeighbors()
@@ -106,7 +131,7 @@ public class Room : MonoBehaviour
         if (containsEnemies)
         {
             // Lets calculate how many
-            int amount = Random.Range(1, (int)Mathf.Floor(size.x / 2));
+            int amount = Random.Range(2, (int)Mathf.Floor(size.x  - 3));
 
             for (int i = 0; i < amount; i++)
             {
@@ -130,17 +155,17 @@ public class Room : MonoBehaviour
 
     private void CreateSubTransforms()
     {
-        walls = new GameObject("Walls");
-        walls.transform.SetParent(transform);
+        walls = new GameObject("Walls").transform;
+        walls.SetParent(transform);
 
-        doors = new GameObject("Doors");
-        doors.transform.SetParent(transform);
+        doors = new GameObject("Doors").transform;
+        doors.SetParent(transform);
 
-        floor = new GameObject("Floor");
-        floor.transform.SetParent(transform);
+        floor = new GameObject("Floor").transform;
+        floor.SetParent(transform);
 
-        traps = new GameObject("Traps");
-        traps.transform.SetParent(transform);
+        traps = new GameObject("Traps").transform;
+        traps.SetParent(transform);
     }
 
     public void EnteredRoom()
