@@ -2,6 +2,7 @@
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using System.Linq;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CharacterAnimator))]
@@ -252,19 +253,19 @@ public class CharacterManager : MonoBehaviour
         if (isAI || body.velocity == Vector2.zero)
         {
             // Get direction
-            if (vertical > 0)
+            if (vertical == 1)
             {
                 currentDirection = Direction.North;
             }
-            else if (vertical < 0)
+            else if (vertical == -1)
             {
                 currentDirection = Direction.South;
             }
-            else if (horizontal > 0)
+            else if (horizontal  == 1)
             {
                 currentDirection = Direction.East;
             }
-            else if (horizontal < 0)
+            else if (horizontal  == -1)
             {
                 currentDirection = Direction.West;
             }
@@ -311,14 +312,29 @@ public class CharacterManager : MonoBehaviour
         // Block diognal movement
         if (movementX != 0 && movementY != 0 && !isAI)
         {
-            // Check which key is pressed the latest
-            if (lastVerticalInput >= lastHorizontalInput)
+            Debug.Log("test: " + Input.GetJoystickNames()[0]);
+            if (Input.GetJoystickNames()[0].Contains("Xbox"))
             {
-                movementX = 0;
+                if (Mathf.Abs(movementX) >= Mathf.Abs(movementY))
+                {
+                    movementY = 0;
+                }
+                else
+                {
+                    movementX = 0;
+                }
             }
             else
             {
-                movementY = 0;
+                // Check which key is pressed the latest
+                if (lastVerticalInput >= lastHorizontalInput)
+                {
+                    movementX = 0;
+                }
+                else
+                {
+                    movementY = 0;
+                }
             }
         }
 
