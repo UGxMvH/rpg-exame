@@ -55,7 +55,6 @@ public class Room : MonoBehaviour
         // Remove all childs
         for (int i = transform.childCount - 1; i >= 0; i--)
         {
-            Debug.Log(i);
             Destroy(transform.GetChild(i).gameObject);
         }
 

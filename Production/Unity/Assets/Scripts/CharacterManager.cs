@@ -312,8 +312,7 @@ public class CharacterManager : MonoBehaviour
         // Block diognal movement
         if (movementX != 0 && movementY != 0 && !isAI)
         {
-            Debug.Log("test: " + Input.GetJoystickNames()[0]);
-            if (Input.GetJoystickNames()[0].Contains("Xbox"))
+            if (Input.GetJoystickNames().Length > 0 && Input.GetJoystickNames()[0].Contains("Xbox"))
             {
                 if (Mathf.Abs(movementX) >= Mathf.Abs(movementY))
                 {
