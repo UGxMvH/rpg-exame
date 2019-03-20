@@ -102,6 +102,11 @@ public class CharacterManager : MonoBehaviour
                 StartCoroutine(PlayerAttack());
             }
 
+            if (Input.GetButtonDown("potion") && potions > 0)
+            {
+                UsePotion();
+            }
+
             // Gives a value between -1 and 1
             if (!isAttacking)
             {
@@ -122,6 +127,36 @@ public class CharacterManager : MonoBehaviour
 
         UpdateIdleState();
         UpdateDirection();
+    }
+
+    private void UsePotion()
+    {
+        // Minus 1 potion
+        potions--;
+
+        // Update potion text
+        if (potionText)
+        {
+            potionText.text = potions.ToString() + "x";
+        }
+
+        // Calculate new health
+        float newHealth = currentHealth + 10;
+
+        // Make sure we do not exceed our max health
+        if (newHealth > health)
+        {
+            newHealth = health;
+        }
+
+        // Update health
+        currentHealth = newHealth;
+
+        // Update health slider
+        if (healthSlider)
+        {
+            healthSlider.value = currentHealth;
+        }
     }
 
     private void UpdateAIMovement()
