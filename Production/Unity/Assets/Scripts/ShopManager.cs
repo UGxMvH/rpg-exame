@@ -47,6 +47,8 @@ public class ShopManager : MonoBehaviour
         if (BuyItem(5))
         {
             // Add healthPotion
+            CharacterManager.player.AddPotion();
+
             successCo = StartCoroutine(Success("You succesfully bought a health potion!"));
         }
     }

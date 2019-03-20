@@ -29,7 +29,7 @@ public class Interactable : MonoBehaviour
         }
     }
 
-    private void Update()
+    public virtual void Update()
     {
         // If player pressed attack button and can interact
         if (Input.GetButtonDown("Attack") && canInteract)
@@ -42,7 +42,7 @@ public class Interactable : MonoBehaviour
     // What happens when we interact with this object (overridable)
     public virtual void OnInteract()
     {
-        Debug.Log("Player interacted with " + transform.name);
+        CharacterManager.player.interactMSG.SetActive(false);
     }
 
     #region collider functions

@@ -17,6 +17,7 @@ public class CharacterManager : MonoBehaviour
 
     internal Direction currentDirection;
     internal int coins;
+    internal int potions;
     internal float horizontal;
     internal float vertical;
     internal float currentHealth;
@@ -34,6 +35,7 @@ public class CharacterManager : MonoBehaviour
     public int damage = 4;
     public Slider healthSlider;
     public Text coinText;
+    public Text potionText;
     public CanvasGroup diedWindow;
     public GameObject interactMSG;
 
@@ -431,5 +433,15 @@ public class CharacterManager : MonoBehaviour
         }
 
         return true;
+    }
+
+    public void AddPotion(int amount = 1)
+    {
+        potions += amount;
+
+        if (potionText)
+        {
+            potionText.text = potions.ToString() + "x";
+        }
     }
 }

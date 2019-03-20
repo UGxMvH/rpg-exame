@@ -8,19 +8,22 @@ public class OpenShop : Interactable
 
     public override void OnInteract()
     {
+        base.OnInteract();
+
         // Show shop and pause game
         ShopManager.instance.shopWindow.SetActive(true);
         Time.timeScale = 0;
         isOpen = true;
     }
 
-    private void Update()
+    public override void Update()
     {
-        if (Input.GetButtonDown("Back") && isOpen)
+        base.Update();
+
+        if (Input.GetButtonDown("Cancel") && isOpen)
         {
             Time.timeScale = 1;
             ShopManager.instance.shopWindow.SetActive(false);
-            isOpen = false;
-        }
+         }
     }
 }
