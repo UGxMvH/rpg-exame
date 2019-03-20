@@ -102,7 +102,7 @@ public class CharacterManager : MonoBehaviour
                 StartCoroutine(PlayerAttack());
             }
 
-            if (Input.GetButtonDown("potion") && potions > 0)
+            if (Input.GetButtonDown("Potion") && potions > 0)
             {
                 UsePotion();
             }
