@@ -2,7 +2,6 @@
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
-using System.Linq;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CharacterAnimator))]
@@ -15,12 +14,12 @@ public class CharacterManager : MonoBehaviour
     private CharacterAnimator animator;
     private float lastVerticalInput;
     private float lastHorizontalInput;
-    private float currentHealth;
-    private int coins;
 
     internal Direction currentDirection;
+    internal int coins;
     internal float horizontal;
     internal float vertical;
+    internal float currentHealth;
     internal bool isIdle = true;
     internal bool isAttacking = false;
     internal bool isDead = false;
@@ -32,9 +31,11 @@ public class CharacterManager : MonoBehaviour
     public LayerMask AiDetectLayer;
     public float runSpeed = 20.0f;
     public int health = 10;
+    public int damage = 4;
     public Slider healthSlider;
     public Text coinText;
     public CanvasGroup diedWindow;
+    public GameObject interactMSG;
 
     private void Awake()
     {
@@ -413,5 +414,22 @@ public class CharacterManager : MonoBehaviour
         {
             coinText.text = coins.ToString("000");
         }
+    }
+
+    public bool RemoveCoins(int price)
+    {
+        if (coins - price < 0)
+        {
+            return false;
+        }
+
+        coins -= price;
+
+        if (coinText)
+        {
+            coinText.text = coins.ToString("000");
+        }
+
+        return true;
     }
 }

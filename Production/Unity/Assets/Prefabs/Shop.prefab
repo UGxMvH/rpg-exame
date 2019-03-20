@@ -7039,6 +7039,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &4186086391238217619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7537686892940243171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a37d3665fed14e29a3d0e578cf6eee2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canInteract: 0
 --- !u!1 &4797739088184128950
 GameObject:
   m_ObjectHideFlags: 0
@@ -13585,11 +13598,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1741443576704673677}
     m_Modifications:
-    - target: {fileID: 3094103215682407734, guid: 6c9c2cba183db1d47bb5a7e9956b4808,
-        type: 3}
-      propertyPath: m_Name
-      value: Objects_40
-      objectReference: {fileID: 0}
     - target: {fileID: 7524077212111875423, guid: 6c9c2cba183db1d47bb5a7e9956b4808,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -13645,8 +13653,19 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3094103215682407734, guid: 6c9c2cba183db1d47bb5a7e9956b4808,
+        type: 3}
+      propertyPath: m_Name
+      value: Objects_40
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6c9c2cba183db1d47bb5a7e9956b4808, type: 3}
+--- !u!1 &7537686892940243171 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3094103215682407734, guid: 6c9c2cba183db1d47bb5a7e9956b4808,
+    type: 3}
+  m_PrefabInstance: {fileID: 4785998407740620245}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3026890012990689418 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7524077212111875423, guid: 6c9c2cba183db1d47bb5a7e9956b4808,

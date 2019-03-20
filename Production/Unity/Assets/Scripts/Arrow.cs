@@ -12,7 +12,6 @@ public class Arrow : MonoBehaviour, PoolInterface
     private Rigidbody2D rb;
 
     public float speed;
-    public float damage;
 
     public void OnStart()
     {
@@ -48,12 +47,12 @@ public class Arrow : MonoBehaviour, PoolInterface
             if (character)
             {
                 // Damage character
-                character.DoDamage(damage);
+                character.DoDamage(CharacterManager.player.damage);
             }
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    /*private void OnCollisionEnter2D(Collision2D collision)
     {
         if (!stuck)
         {
@@ -72,7 +71,7 @@ public class Arrow : MonoBehaviour, PoolInterface
                 character.DoDamage(damage);
             }
         }
-    }
+    }*/
 
     private IEnumerator Dissapear()
     {
