@@ -5,12 +5,12 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/Main Menu.unity
+    guid: 04fe9eb9a5ef590488bbf1a97a8cbecf
+  - enabled: 1
+    path: Assets/Scenes/Overworld.unity
+    guid: d8f6d73769940214ab4bcf1653cf80dc
   - enabled: 1
     path: Assets/Scenes/Level.unity
     guid: 48ef2b0a42e6d4ea193d71d2f46a43bd
