@@ -1970,7 +1970,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 20, y: 0}
-  m_SizeDelta: {x: 50, y: 50}
+  m_SizeDelta: {x: 75, y: 75}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1195529864
 MonoBehaviour:
@@ -1992,7 +1992,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 8f03d65eca65243d0963f648c2e9824a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 17b7a5813f13148e19bd3c18dc2c9827, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2564,7 +2564,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minSize: 4
   maxSize: 10
-  maxRooms: 10
+  maxRooms: 7
   minRooms: 5
   camera: {fileID: 1204577601}
   player: {fileID: 553578251}
@@ -3131,7 +3131,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300060, guid: 4ae102c90a4936944a3b68f63d686881,
+      objectReference: {fileID: 21300000, guid: 17b7a5813f13148e19bd3c18dc2c9827,
         type: 3}
     - target: {fileID: 3437537419124384985, guid: 3c7ee20a45e754908a9ee41a849c75c1,
         type: 3}
@@ -3640,6 +3640,7 @@ GameObject:
   - component: {fileID: 1902102768}
   - component: {fileID: 1902102770}
   - component: {fileID: 1902102769}
+  - component: {fileID: 1902102771}
   m_Layer: 5
   m_Name: '[Text] Amount'
   m_TagString: Untagged
@@ -3708,6 +3709,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1902102767}
   m_CullTransparentMesh: 0
+--- !u!114 &1902102771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1902102767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1917370055
 GameObject:
   m_ObjectHideFlags: 0

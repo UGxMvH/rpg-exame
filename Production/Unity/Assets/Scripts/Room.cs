@@ -138,7 +138,7 @@ public class Room : MonoBehaviour
                 GameObject prefab = myGenerator.enemies[Random.Range(0, myGenerator.enemies.Length)];
 
                 // Choose location
-                Vector2 pos = new Vector2(Random.Range(2, size.x - 2), Random.Range(2, size.y - 2));
+                Vector2 pos = new Vector2(Random.Range(2, size.x - 3), Random.Range(2, size.y - 3));
 
                 CharacterManager enemy = Instantiate(prefab, pos, Quaternion.identity, transform).GetComponent<CharacterManager>();
 

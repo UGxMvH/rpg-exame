@@ -28,6 +28,7 @@ public class CharacterManager : MonoBehaviour
     internal Room AiRoom;
 
     [Header("Settings")]
+    public bool overworld;
     public bool isAI;
     public LayerMask AiDetectLayer;
     public float runSpeed = 20.0f;
@@ -96,13 +97,13 @@ public class CharacterManager : MonoBehaviour
         }
         else
         {
-            if (Input.GetButtonDown("Attack") && !isAttacking)
+            if (!overworld && Input.GetButtonDown("Attack") && !isAttacking)
             {
                 isAttacking = true;
                 StartCoroutine(PlayerAttack());
             }
 
-            if (Input.GetButtonDown("Potion") && potions > 0)
+            if (!overworld && Input.GetButtonDown("Potion") && potions > 0)
             {
                 UsePotion();
             }

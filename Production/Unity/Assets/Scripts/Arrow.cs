@@ -34,7 +34,7 @@ public class Arrow : MonoBehaviour, PoolInterface
     {
         if (!stuck)
         {
-            if (collision.gameObject.isStatic)
+            if (collision.gameObject.tag == "Static")
             {
                 stuck = true;
                 StartCoroutine(Dissapear());
@@ -51,27 +51,6 @@ public class Arrow : MonoBehaviour, PoolInterface
             }
         }
     }
-
-    /*private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (!stuck)
-        {
-            if (collision.gameObject.isStatic)
-            {
-                stuck = true;
-                StartCoroutine(Dissapear());
-                return;
-            }
-
-            CharacterManager character = collision.gameObject.GetComponent<CharacterManager>();
-
-            if (character)
-            {
-                // Damage character
-                character.DoDamage(damage);
-            }
-        }
-    }*/
 
     private IEnumerator Dissapear()
     {
