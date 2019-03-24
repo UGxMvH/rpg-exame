@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.U2D;
 
 public class SmoothCamera : MonoBehaviour
 {
@@ -11,6 +12,17 @@ public class SmoothCamera : MonoBehaviour
     [Range(0.1f, 1f)]
     public float smoothness = 0.5f;
     public Vector2 offset;
+
+    private void Start()
+    {
+        PixelPerfectCamera pixelCam = GetComponent<PixelPerfectCamera>();
+
+        if (pixelCam)
+        {
+            pixelCam.refResolutionX = Screen.width;
+            pixelCam.refResolutionY = Screen.height;
+        }
+    }
 
     // Update is called once per frame
     void Update()

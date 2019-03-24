@@ -16,8 +16,11 @@ public class AnimateTitle : MonoBehaviour
 
     private IEnumerator Animate()
     {
-        rect.DOShakeScale(100, .1f, 2);
+        while (true)
+        {
+            rect.DOShakeScale(.5f, .1f, 2);
 
-        yield return new WaitForEndOfFrame();
+            yield return new WaitForSecondsRealtime(.5f);
+        }
     }
 }
