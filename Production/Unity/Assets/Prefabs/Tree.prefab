@@ -179,6 +179,7 @@ MonoBehaviour:
   diedWindow: {fileID: 0}
   interactMSG: {fileID: 0}
   dieSound: {fileID: 8300000, guid: 84cfd8d5f2040439bab590d1f1fbb1db, type: 3}
+  enemyAttackSound: {fileID: 8300000, guid: ddf460384a3f93046bb1a20b5efc0a36, type: 3}
 --- !u!114 &1595548336080663530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,10 +313,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4511490741220459864}
     m_Modifications:
-    - target: {fileID: 1874880863478324, guid: efcee065bc2d6c749ac92ec700e6c416, type: 3}
-      propertyPath: m_Name
-      value: Health Bar (Horizontal)
-      objectReference: {fileID: 0}
     - target: {fileID: 224693847975444786, guid: efcee065bc2d6c749ac92ec700e6c416,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -431,16 +428,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 0.2
       objectReference: {fileID: 0}
-    - target: {fileID: 224621286032666398, guid: efcee065bc2d6c749ac92ec700e6c416,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224621286032666398, guid: efcee065bc2d6c749ac92ec700e6c416,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 114801603912939272, guid: efcee065bc2d6c749ac92ec700e6c416,
         type: 3}
       propertyPath: m_Value
@@ -449,6 +436,20 @@ PrefabInstance:
     - target: {fileID: 114801603912939272, guid: efcee065bc2d6c749ac92ec700e6c416,
         type: 3}
       propertyPath: m_Transition
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1874880863478324, guid: efcee065bc2d6c749ac92ec700e6c416, type: 3}
+      propertyPath: m_Name
+      value: Health Bar (Horizontal)
+      objectReference: {fileID: 0}
+    - target: {fileID: 224621286032666398, guid: efcee065bc2d6c749ac92ec700e6c416,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224621286032666398, guid: efcee065bc2d6c749ac92ec700e6c416,
+        type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114558697029011420, guid: efcee065bc2d6c749ac92ec700e6c416,

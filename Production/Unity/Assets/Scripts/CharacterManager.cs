@@ -40,6 +40,7 @@ public class CharacterManager : MonoBehaviour
     public CanvasGroup diedWindow;
     public GameObject interactMSG;
     public AudioClip dieSound;
+    public AudioClip enemyAttackSound;
 
     private void Awake()
     {
@@ -55,13 +56,20 @@ public class CharacterManager : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<CharacterAnimator>();
 
+        // Set values from save game
+        SaveGame sg = SaveGameManager.instance.currentSaveGame;
+
+        health = sg.maxHealth;
+        currentHealth = sg.health;
+        damage = sg.damage;
+        coins = sg.coins;
+
         if (healthSlider)
         {
             // Set health slider values if there is a health slider
             healthSlider.minValue = 0;
             healthSlider.maxValue = health;
             healthSlider.value = health;
-            currentHealth = health;
         }
 
         // Check if is AI
@@ -268,6 +276,9 @@ public class CharacterManager : MonoBehaviour
 
             // Attack animation
             yield return StartCoroutine(animator.EnemyAttack());
+
+            // Play Attack sound
+            AudioManager.instance.sfx.PlayOneShot(enemyAttackSound);
 
             // Attack 2 types
             if (Random.Range(0, 100) % 2 == 0)

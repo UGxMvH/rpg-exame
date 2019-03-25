@@ -142,4 +142,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 250
-  damage: 4
+  hitSounds:
+  - {fileID: 8300000, guid: b27e6a17a2dd844c7a7958f840bbf47c, type: 3}
+  - {fileID: 8300000, guid: 7a699022408eb4ac289448094a731e75, type: 3}
+  - {fileID: 8300000, guid: d365670e7b52445c991a36dc1584d1d9, type: 3}
+  - {fileID: 8300000, guid: 2f97a1beafb6542488c84913e62c1aaa, type: 3}
+  - {fileID: 8300000, guid: 4cfe2d965cb684222aacd23b437d187b, type: 3}
+  - {fileID: 8300000, guid: cf07cdf0a82ff4b059def94180897ebb, type: 3}
+  - {fileID: 8300000, guid: 5630f84a4fa5545a4b343931f5256db0, type: 3}
+  - {fileID: 8300000, guid: d76b50c8be44b4e5e8648b0a600bbc5f, type: 3}
+  shootSounds:
+  - {fileID: 8300000, guid: 2d6dc3e8d7c83422ba0306a1622262aa, type: 3}
+  - {fileID: 8300000, guid: e83e7922f15464ba589539d8bf9c83c5, type: 3}
+  - {fileID: 8300000, guid: 871876e86fc4f43c295a2252122eb328, type: 3}
+  - {fileID: 8300000, guid: 4ea6dcfca7f0441da9c1503b7ecfe623, type: 3}
+  - {fileID: 8300000, guid: 55ac729b02214476eac74409b5351a65, type: 3}
+  - {fileID: 8300000, guid: e2cabf73860a043cc95bec38b8f6f8bb, type: 3}
+  - {fileID: 8300000, guid: d9a26876378b3407d838df49c9a1ebd4, type: 3}
+  - {fileID: 8300000, guid: bd9e45da42e484ceda5b6a43fa162101, type: 3}
+  - {fileID: 8300000, guid: b5af79ec1f80d400f995765b5fbf9016, type: 3}
+  - {fileID: 8300000, guid: b7d893113de9d4410914f226dfb29ee0, type: 3}
+  - {fileID: 8300000, guid: f8cbd765b941c4a2a85db4aa7603b4e5, type: 3}
+  - {fileID: 8300000, guid: 7ffc4b9e10e2f4581ab950bd991b310f, type: 3}
+  - {fileID: 8300000, guid: ea7bc4ed551fb4eadb7b8ba35e3b3254, type: 3}
