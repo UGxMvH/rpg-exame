@@ -418,6 +418,12 @@ public class CharacterManager : MonoBehaviour
 
     public void DoDamage(float damage)
     {
+        // Don't do damage while transisting
+        if (TransitionManager.instance.transistioning)
+        {
+            return;
+        }
+
         float newHealth = currentHealth - damage;
 
         if (newHealth <= 0)

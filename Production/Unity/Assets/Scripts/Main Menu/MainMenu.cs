@@ -21,14 +21,15 @@ public class MainMenu : MonoBehaviour
     [Header("Sounds")]
     public AudioClip hoverButton;
 
-    private new AudioSource audio;
+    public AudioSource music;
+    public AudioSource sfx;
+
     private RectTransform rect;
     private CanvasScaler scaler;
 
     private void Start()
     {
         // Get variables
-        audio = GetComponent<AudioSource>();
         rect = GetComponent<RectTransform>();
         scaler = GetComponent<CanvasScaler>();
 
@@ -74,7 +75,7 @@ public class MainMenu : MonoBehaviour
 
     public void OnHoverEnter(RectTransform rect)
     {
-        audio.PlayOneShot(hoverButton);
+        sfx.PlayOneShot(hoverButton, Settings.instance.sfxVolume);
 
         if (rect.gameObject.name.Contains("Save game"))
         {
