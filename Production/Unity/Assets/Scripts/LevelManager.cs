@@ -20,6 +20,7 @@ public class LevelManager : MonoBehaviour
     public Transform player;
     public GameObject shop;
     public bool debugShop;
+    public AudioClip levelMusic;
 
     [Header("Tiles")]
     public GameObject[] floorTiles;
@@ -67,7 +68,11 @@ public class LevelManager : MonoBehaviour
         }
 
         // Generate level
-       StartCoroutine(GenerateLevel());
+        StartCoroutine(GenerateLevel());
+
+        // Start music
+        AudioManager.instance.music.clip = levelMusic;
+        AudioManager.instance.music.Play();
     }
 
     private int MakeOdd(int i)

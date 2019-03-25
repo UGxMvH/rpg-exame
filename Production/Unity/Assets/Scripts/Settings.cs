@@ -7,8 +7,7 @@ public class Settings : MonoBehaviour
 {
     public static Settings instance;
 
-    public MainMenu mainMenu;
-
+    internal AudioManager audioManager;
     internal float musicVolume = .75f;
     internal float sfxVolume = 1;
 
@@ -17,23 +16,22 @@ public class Settings : MonoBehaviour
         instance = this;
     }
 
+    private void Start()
+    {
+        audioManager = AudioManager.instance;
+    }
+
     public void ChangeMusicVolume(Slider slider)
     {
         musicVolume = slider.value;
 
-        if (mainMenu)
-        {
-            mainMenu.music.volume = musicVolume;
-        }
+        audioManager.music.volume = musicVolume;
     }
 
     public void changeSFXVolume(Slider slider)
     {
         sfxVolume = slider.value;
 
-        if (mainMenu)
-        {
-            mainMenu.sfx.volume = sfxVolume;
-        }
+        audioManager.sfx.volume = sfxVolume;
     }
 }

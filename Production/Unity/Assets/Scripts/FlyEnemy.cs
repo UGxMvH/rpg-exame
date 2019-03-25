@@ -17,6 +17,7 @@ public class FlyEnemy : MonoBehaviour
     public Sprite[] left;
     public Sprite[] right;
     public Sprite[] dead;
+    public AudioClip dieSound;
 
     private void Start()
     {
@@ -89,6 +90,9 @@ public class FlyEnemy : MonoBehaviour
 
     private IEnumerator Die()
     {
+        // Play dead sound
+        AudioManager.instance.sfx.PlayOneShot(dieSound);
+
         isDead = true;
         rb.velocity = Vector2.zero;
 

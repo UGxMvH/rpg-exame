@@ -181,3 +181,4 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 37a2d4b7807fb4089a452e9a68acc935, type: 3}
   - {fileID: 21300000, guid: 53a1842734d514cbaa3c63fb01b8a2e5, type: 3}
   - {fileID: 21300000, guid: 071c2f3c390094fbe96e77d4670007d0, type: 3}
+  dieSound: {fileID: 8300000, guid: 84cfd8d5f2040439bab590d1f1fbb1db, type: 3}

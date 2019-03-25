@@ -39,6 +39,7 @@ public class CharacterManager : MonoBehaviour
     public Text potionText;
     public CanvasGroup diedWindow;
     public GameObject interactMSG;
+    public AudioClip dieSound;
 
     private void Awake()
     {
@@ -402,6 +403,9 @@ public class CharacterManager : MonoBehaviour
             {
                 PoolManager.instance.InstantiateObject("Coin", transform.position, Quaternion.identity, LevelManager.instace.currentRoom.transform);
             }
+
+            // play sound
+            AudioManager.instance.sfx.PlayOneShot(dieSound);
 
             // Animate dead
             animator.Die();

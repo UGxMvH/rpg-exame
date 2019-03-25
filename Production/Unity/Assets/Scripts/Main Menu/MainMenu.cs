@@ -1,10 +1,7 @@
 ﻿using UnityEngine;
 using DG.Tweening;
-using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(AudioSource))]
 [RequireComponent(typeof(RectTransform))]
 [RequireComponent(typeof(CanvasScaler))]
 public class MainMenu : MonoBehaviour
@@ -20,9 +17,6 @@ public class MainMenu : MonoBehaviour
 
     [Header("Sounds")]
     public AudioClip hoverButton;
-
-    public AudioSource music;
-    public AudioSource sfx;
 
     private RectTransform rect;
     private CanvasScaler scaler;
@@ -75,7 +69,7 @@ public class MainMenu : MonoBehaviour
 
     public void OnHoverEnter(RectTransform rect)
     {
-        sfx.PlayOneShot(hoverButton, Settings.instance.sfxVolume);
+        AudioManager.instance.sfx.PlayOneShot(hoverButton);
 
         if (rect.gameObject.name.Contains("Save game"))
         {
