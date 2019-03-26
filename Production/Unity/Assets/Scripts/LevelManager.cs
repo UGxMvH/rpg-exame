@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -21,6 +22,7 @@ public class LevelManager : MonoBehaviour
     public GameObject shop;
     public bool debugShop;
     public AudioClip levelMusic;
+    public CanvasGroup FinishedWindow;
 
     [Header("Tiles")]
     public GameObject[] floorTiles;
@@ -38,6 +40,12 @@ public class LevelManager : MonoBehaviour
     public GameObject normalDoorRight;
     public GameObject normalDoorTop;
     public GameObject normalDoorBottom;
+
+    [Header("Last Door")]
+    public GameObject topIcon;
+    public GameObject rightIcon;
+    public GameObject bottomIcon;
+    public GameObject leftIcon;
 
     [Header("Enemies")]
     public GameObject[] enemies;
@@ -102,6 +110,15 @@ public class LevelManager : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
+    public void FinishedLevel()
+    {
+        // Finished
+        Time.timeScale = 0;
+        FinishedWindow.gameObject.SetActive(true);
+        FinishedWindow.GetComponent<RectTransform>().DOAnchorPosY(0, 1);
+        FinishedWindow.DOFade(1, 1);
+    }
+
     private IEnumerator GenerateLevel()
     {
         // Fluid fill rooms
@@ -126,8 +143,11 @@ public class LevelManager : MonoBehaviour
                 lowestRoom = 1;
             }
 
-            rooms.Values.ElementAt(Random.Range(lowestRoom, rooms.Count - 1)).isShopRoom = true;
+            rooms.Values.ElementAt(Random.Range(lowestRoom, rooms.Count - 2)).isShopRoom = true;
         }
+
+        // Set last room
+        rooms.Values.ElementAt(rooms.Count - 1).isLastRoom = true;
 
         // Rooms are generated let them finish and generate doors
         foreach (KeyValuePair<Vector2, Room> room in rooms)
@@ -152,12 +172,12 @@ public class LevelManager : MonoBehaviour
     private IEnumerator GenerateRoom(Vector2 virtualLoc)
     {
         // Default variables
-        bool lastRoom = false;
-        bool mainRoom = false;
-        bool northDoor = false;
-        bool eastDoor = false;
-        bool southDoor = false;
-        bool westDoor = false;
+        bool lastRoom   = false;
+        bool mainRoom   = false;
+        bool northDoor  = false;
+        bool eastDoor   = false;
+        bool southDoor  = false;
+        bool westDoor   = false;
 
         if (rooms.Count == maxRooms)
         {

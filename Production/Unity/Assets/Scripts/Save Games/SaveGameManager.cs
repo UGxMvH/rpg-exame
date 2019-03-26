@@ -31,6 +31,12 @@ public class SaveGameManager : MonoBehaviour
         // Set title
         currentSaveGame.title = DateTime.Now.ToShortDateString() + " - " + DateTime.Now.ToShortTimeString();
 
+        // Remove file if already exists
+        if (File.Exists(currentFile))
+        {
+            File.Delete(currentFile);
+        }
+
         // Save
         File.WriteAllText(currentFile, JsonUtility.ToJson(currentSaveGame));
     }

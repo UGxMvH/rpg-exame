@@ -15,6 +15,7 @@ public class Room : MonoBehaviour
     // Public variables
     public bool containsEnemies;
     public bool isShopRoom;
+    public bool isLastRoom;
 
     public LevelManager myGenerator;
     public Vector2 virtualLoc;
@@ -149,6 +150,49 @@ public class Room : MonoBehaviour
                     enemies.Add(enemy);
                 }
             }
+        }
+
+        if (isLastRoom)
+        {
+            Door door = null;
+            // This is the last door so we need to create an exit door
+            if (!northDoor)
+            {
+                northDoor = door = Instantiate(myGenerator.normalDoorTop, new Vector2(Mathf.Floor(size.x / 2), size.y), Quaternion.identity, doors.transform).GetComponent<Door>();
+
+                Instantiate(myGenerator.topIcon, new Vector2(Mathf.Floor(size.x / 2), size.y), Quaternion.identity, doors.transform);
+            }
+            else if (!eastDoor)
+            {
+                eastDoor = door = Instantiate(myGenerator.normalDoorRight, new Vector2(size.x, Mathf.Floor(size.y / 2)), Quaternion.identity, doors.transform).GetComponent<Door>();
+
+                Instantiate(myGenerator.rightIcon, new Vector2(size.x, Mathf.Floor(size.y / 2)), Quaternion.identity, doors.transform);
+            }
+            else if (!southDoor)
+            {
+                southDoor = door = Instantiate(myGenerator.normalDoorBottom, new Vector2(Mathf.Floor(size.x / 2), -1), Quaternion.identity, doors.transform).GetComponent<Door>();
+
+                Instantiate(myGenerator.bottomIcon, new Vector2(Mathf.Floor(size.x / 2), -1), Quaternion.identity, doors.transform);
+            }
+            else if (!westDoor)
+            {
+                westDoor = door = Instantiate(myGenerator.normalDoorLeft, new Vector2(-1, Mathf.Floor(size.y / 2)), Quaternion.identity, doors.transform).GetComponent<Door>();
+
+                Instantiate(myGenerator.leftIcon, new Vector2(-1, Mathf.Floor(size.y / 2)), Quaternion.identity, doors.transform);
+            }
+            else
+            {
+                // Every position is taken so just take the north door
+                Destroy(northDoor.gameObject);
+
+                northDoor = door = Instantiate(myGenerator.normalDoorTop, new Vector2(Mathf.Floor(size.x / 2), size.y), Quaternion.identity, doors.transform).GetComponent<Door>();
+
+                Instantiate(myGenerator.topIcon, new Vector2(Mathf.Floor(size.x / 2), size.y), Quaternion.identity, doors.transform);
+            }
+
+            // Set-up door
+            door.finishDoor = true;
+            door.room = this;
         }
     }
 
