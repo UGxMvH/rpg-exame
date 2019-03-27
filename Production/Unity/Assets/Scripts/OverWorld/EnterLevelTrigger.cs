@@ -40,7 +40,7 @@ public class EnterLevelTrigger : MonoBehaviour
 
             if (boss && saveGame.finishedLvl3)
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                SceneManager.LoadScene(3);
             }
         }
     }

@@ -62,6 +62,14 @@ public class Arrow : MonoBehaviour, PoolInterface
                 // Damage character
                 character.DoDamage(CharacterManager.player.damage);
             }
+
+            Boss boss = collision.gameObject.GetComponent<Boss>();
+
+            if (boss)
+            {
+                // Damage boss
+                boss.DoDamage(CharacterManager.player.damage);
+            }
         }
     }
 

@@ -437,7 +437,7 @@ public class CharacterManager : MonoBehaviour
     public void DoDamage(float damage)
     {
         // Don't do damage while transisting
-        if (TransitionManager.instance.transistioning)
+        if (TransitionManager.instance && TransitionManager.instance.transistioning)
         {
             return;
         }

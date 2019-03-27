@@ -17,6 +17,7 @@ public class MainMenu : MonoBehaviour
 
     [Header("Sounds")]
     public AudioClip hoverButton;
+    public AudioClip backgroundMuisc;
 
     private RectTransform rect;
     private CanvasScaler scaler;
@@ -36,6 +37,10 @@ public class MainMenu : MonoBehaviour
         // Make sure the other screens are nog visible
         settings.DOMoveX(-Screen.width / 2, 0);
         saveGames.DOMoveX(Screen.width * 1.5f, 0);
+
+        // Play sound
+        AudioManager.instance.music.clip = backgroundMuisc;
+        AudioManager.instance.music.Play();
     }
 
     public void ShowSaveGames()
