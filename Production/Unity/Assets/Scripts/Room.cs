@@ -131,7 +131,15 @@ public class Room : MonoBehaviour
         if (containsEnemies)
         {
             // Lets calculate how many
-            int amount = Random.Range(2, (int)Mathf.Floor(size.x  - 3));
+            int min = 2;
+            int max = (int)Mathf.Floor(size.x - 3);
+
+            if (max <= min)
+            {
+                max = min + 1;
+            }
+
+            int amount = Random.Range(min, max);
 
             for (int i = 0; i < amount; i++)
             {
