@@ -16,6 +16,7 @@ public class Room : MonoBehaviour
     public bool containsEnemies;
     public bool isShopRoom;
     public bool isLastRoom;
+    public bool isPuzzle1;
 
     public LevelManager myGenerator;
     public Vector2 virtualLoc;
@@ -46,6 +47,11 @@ public class Room : MonoBehaviour
             ReplaceWithShop();
         }
 
+        if (isPuzzle1)
+        {
+            ReplaceWithPuzzle1();
+        }
+
         GetNeighbors();
         CreateDoors();
         SetUpRoom();
@@ -68,6 +74,30 @@ public class Room : MonoBehaviour
         traps = trans.GetChild(3);
 
         size = new Vector2(11, 9);
+    }
+
+    private void ReplaceWithPuzzle1()
+    {
+        // Remove all childs
+        for (int i = transform.childCount - 1; i >= 0; i--)
+        {
+            Destroy(transform.GetChild(i).gameObject);
+        }
+
+        // Add shop room
+        Transform trans = Instantiate(myGenerator.puzzle1, transform).transform;
+
+        walls = trans.GetChild(0);
+        doors = trans.GetChild(1);
+        floor = trans.GetChild(2);
+        traps = trans.GetChild(3);
+
+        size = new Vector2(9, 7);
+
+        // Fix camera
+        SmoothCamera camera = Camera.main.GetComponent<SmoothCamera>();
+        camera.offset = new Vector2(Mathf.Floor(size.x / 2), Mathf.Floor(size.y / 2));
+        camera.GetComponent<Camera>().orthographicSize = size.y / 2 + 2;
     }
 
     private void GetNeighbors()

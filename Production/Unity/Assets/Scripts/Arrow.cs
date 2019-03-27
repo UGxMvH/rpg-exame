@@ -32,7 +32,10 @@ public class Arrow : MonoBehaviour, PoolInterface
         rb.AddForce(transform.up * speed);
 
         // Play shoot sound
-        AudioManager.instance.sfx.PlayOneShot(shootSounds[Random.Range(0, shootSounds.Length)]);
+        if (AudioManager.instance)
+        {
+            AudioManager.instance.sfx.PlayOneShot(shootSounds[Random.Range(0, shootSounds.Length)]);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -41,7 +44,11 @@ public class Arrow : MonoBehaviour, PoolInterface
         {
             if (collision.gameObject.tag == "Static")
             {
-                AudioManager.instance.sfx.PlayOneShot(hitSounds[Random.Range(0, hitSounds.Length)]);
+                if (AudioManager.instance)
+                {
+                    AudioManager.instance.sfx.PlayOneShot(hitSounds[Random.Range(0, hitSounds.Length)]);
+                }
+
                 stuck = true;
                 StartCoroutine(Dissapear());
                 rb.velocity = Vector2.zero;

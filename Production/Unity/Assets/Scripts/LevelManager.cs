@@ -20,6 +20,7 @@ public class LevelManager : MonoBehaviour
     public new SmoothCamera camera;
     public Transform player;
     public GameObject shop;
+    public GameObject puzzle1;
     public AudioClip levelMusic;
     public CanvasGroup FinishedWindow;
 
@@ -143,6 +144,19 @@ public class LevelManager : MonoBehaviour
 
         // Set last room
         rooms.Values.ElementAt(rooms.Count - 1).isLastRoom = true;
+
+        // Set puzzle room
+        if (SaveGameManager.instance)
+        {
+            if (!SaveGameManager.instance.currentSaveGame.finishedLvl1)
+            {
+                rooms.Values.ElementAt(0).isPuzzle1 = true;
+            }
+        }
+        else
+        {
+            rooms.Values.ElementAt(0).isPuzzle1 = true;
+        }
 
         // Rooms are generated let them finish and generate doors
         foreach (KeyValuePair<Vector2, Room> room in rooms)
