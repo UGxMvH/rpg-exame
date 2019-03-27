@@ -20,7 +20,6 @@ public class LevelManager : MonoBehaviour
     public new SmoothCamera camera;
     public Transform player;
     public GameObject shop;
-    public bool debugShop;
     public AudioClip levelMusic;
     public CanvasGroup FinishedWindow;
 
@@ -79,8 +78,11 @@ public class LevelManager : MonoBehaviour
         StartCoroutine(GenerateLevel());
 
         // Start music
-        AudioManager.instance.music.clip = levelMusic;
-        AudioManager.instance.music.Play();
+        if (AudioManager.instance)
+        {
+            AudioManager.instance.music.clip = levelMusic;
+            AudioManager.instance.music.Play();
+        }
     }
 
     private int MakeOdd(int i)
@@ -131,20 +133,13 @@ public class LevelManager : MonoBehaviour
         }
 
         // Choose random room that is going to be the shop
-        if (debugShop)
+        int lowestRoom = minRooms - 2;
+        if (lowestRoom <= 0)
         {
-            rooms.Values.ElementAt(1).isShopRoom = true;
+            lowestRoom = 1;
         }
-        else
-        {
-            int lowestRoom = minRooms - 2;
-            if (lowestRoom <= 0)
-            {
-                lowestRoom = 1;
-            }
 
-            rooms.Values.ElementAt(Random.Range(lowestRoom, rooms.Count - 2)).isShopRoom = true;
-        }
+        rooms.Values.ElementAt(Random.Range(lowestRoom, rooms.Count - 2)).isShopRoom = true;
 
         // Set last room
         rooms.Values.ElementAt(rooms.Count - 1).isLastRoom = true;

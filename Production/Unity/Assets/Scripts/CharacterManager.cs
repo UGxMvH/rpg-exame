@@ -57,12 +57,15 @@ public class CharacterManager : MonoBehaviour
         animator = GetComponent<CharacterAnimator>();
 
         // Set values from save game
-        SaveGame sg = SaveGameManager.instance.currentSaveGame;
+        if (SaveGameManager.instance)
+        {
+            SaveGame sg = SaveGameManager.instance.currentSaveGame;
 
-        health = sg.maxHealth;
-        currentHealth = sg.health;
-        damage = sg.damage;
-        coins = sg.coins;
+            health = sg.maxHealth;
+            currentHealth = sg.health;
+            damage = sg.damage;
+            coins = sg.coins;
+        }
 
         if (healthSlider)
         {

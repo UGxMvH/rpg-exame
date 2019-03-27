@@ -61,7 +61,7 @@ public class Maria : Interactable
         // Pause game
         Time.timeScale = 0;
 
-        StoryLine.DOFade(1, 1);
+        StoryLine.DOFade(1, .5f);
 
         yield return new WaitForSecondsRealtime(1);
 
@@ -80,7 +80,7 @@ public class Maria : Interactable
             StopCoroutine(co);
         }
 
-        StoryLine.DOFade(0, 1);
+        StoryLine.DOFade(0, .5f);
         Time.timeScale = 1;
         isTalking = false;
     }

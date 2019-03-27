@@ -1,18 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Overworld : MonoBehaviour
 {
     public AudioClip backgroundMusic;
+
+    public CanvasGroup pauseWindow;
 
     public GameObject overlayLvl2;
     public GameObject overlayLvl3;
     public GameObject overlayLvlBoss;
     public GameObject overlayFinishedGame;
 
+    private bool inPauseMenu;
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         AudioManager.instance.music.clip = backgroundMusic;
         AudioManager.instance.music.Play();
@@ -36,5 +42,39 @@ public class Overworld : MonoBehaviour
         {
             overlayLvl2.SetActive(true);
         }
+    }
+
+    private void Update()
+    {
+        if (Input.GetButtonDown("Pause"))
+        {
+            if (inPauseMenu)
+            {
+                ClosePauseMenu();
+            }
+            else
+            {
+                OpenPauseMenu();
+            }
+        }
+    }
+
+    private void OpenPauseMenu()
+    {
+        inPauseMenu = true;
+        Time.timeScale = 0;
+        pauseWindow.DOFade(1, .5f);
+    }
+
+    public void ClosePauseMenu()
+    {
+        inPauseMenu = false;
+        Time.timeScale = 1;
+        pauseWindow.DOFade(0, .5f);
+    }
+
+    public void GoToMainMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 }
