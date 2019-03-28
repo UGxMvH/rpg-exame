@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
-using System.IO;
-using System;
 
 [RequireComponent(typeof(RectTransform))]
 [RequireComponent(typeof(CanvasScaler))]
@@ -67,6 +65,7 @@ public class MainMenu : MonoBehaviour
         }
 
         // Make sure the other screens are nog visible
+        Debug.Log(Screen.width);
         settings.DOMoveX(-Screen.width / 2, 0);
         saveGames.DOMoveX(Screen.width * 1.5f, 0);
 
