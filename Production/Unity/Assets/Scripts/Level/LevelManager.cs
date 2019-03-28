@@ -7,10 +7,9 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
+    #region Public Variables
     public static LevelManager instace;
     public Dictionary<Vector2, Room> rooms = new Dictionary<Vector2, Room>();
-
-    private bool hasShop = false;
 
     [Header("Settings")]
     public int minSize;
@@ -55,13 +54,25 @@ public class LevelManager : MonoBehaviour
 
     [HideInInspector]
     public Room currentRoom;
+    #endregion
 
+    #region Private Variables
+    private bool hasShop = false;
+    #endregion
+
+    /*
+     * Awake is called when the script instance is being loaded.
+     * We use it to set a static refrence to the LevelManager.
+     */
     private void Awake()
     {
         instace = this;
     }
 
-    // Start is called before the first frame update
+    /*
+     * Start is called before the first frame update.
+     * We use it to gether the required components and set default variables.
+     */
     void Start()
     {
         // Check for mistakes
@@ -86,6 +97,9 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    /*
+     * Make sure a integer is odd
+     */
     private int MakeOdd(int i)
     {
         if (i % 2 == 0)
@@ -96,31 +110,44 @@ public class LevelManager : MonoBehaviour
         return i;
     }
 
+    /*
+     * Transist rooms.
+     * Leave room A and go to room B.
+     */
     public void TransistRoom(Room from, Room to)
     {
         StartCoroutine(TransistRooms(from, to));
     }
 
+    /*
+     * Restart level
+     */
     public void RetryLevel()
     {
         Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
+    /*
+     * Exit this level and go to OverWorld
+     */
     public void BackToOverworld()
     {
         Time.timeScale = 1;
         SceneManager.LoadScene(1);
     }
 
+    /*
+     * Level completed!
+     */
     public void FinishedLevel()
     {
         // Finished
         Time.timeScale = 0;
         finishedWindow.DOFade(1, .5f);
         finishedWindow.GetComponent<RectTransform>().DOAnchorPosY(0, 1);
-        finishedWindow.interactable = true;
-        finishedWindow.blocksRaycasts = true;
+        finishedWindow.interactable     = true;
+        finishedWindow.blocksRaycasts   = true;
 
         if (GameManager.instance.isUsingController)
         {
@@ -128,6 +155,9 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    /* 
+     * Randomly generate a complete level.
+     */
     private IEnumerator GenerateLevel()
     {
         // Fluid fill rooms
@@ -184,6 +214,9 @@ public class LevelManager : MonoBehaviour
         rooms[Vector2.zero].OpenDoors();
     }
 
+    /*
+     * Generate a room
+     */
     private IEnumerator GenerateRoom(Vector2 virtualLoc)
     {
         // Default variables
@@ -429,6 +462,10 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    /*
+     * Asynchronous code
+     * Transist rooms smoothly with an animation.
+     */
     private IEnumerator TransistRooms(Room from, Room to)
     {
         if (TransitionManager.instance.transistioning)

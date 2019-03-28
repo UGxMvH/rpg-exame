@@ -5,14 +5,24 @@ using UnityEngine.U2D;
 
 public class SmoothCamera : MonoBehaviour
 {
-    private Vector3 velocity = Vector3.zero;
-
+    #region Public Variables
     public bool smooth = true;
     public Transform target;
+
     [Range(0.1f, 1f)]
     public float smoothness = 0.5f;
-    public Vector2 offset;
 
+    public Vector2 offset;
+    #endregion
+
+    #region Private Variables
+    private Vector3 velocity = Vector3.zero;
+    #endregion
+
+    /*
+     * Start is called before the first frame update.
+     * We use it to gether the required components and set default variables.
+     */
     private void Start()
     {
         PixelPerfectCamera pixelCam = GetComponent<PixelPerfectCamera>();
@@ -24,7 +34,9 @@ public class SmoothCamera : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
+    /*
+     * Update is called each frame.
+     */
     void Update()
     {
         if (!target) return;

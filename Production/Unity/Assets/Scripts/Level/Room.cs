@@ -4,19 +4,12 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
-    // Private variables
-    private List<CharacterManager> enemies = new List<CharacterManager>();
-
-    private Door northDoor;
-    private Door eastDoor;
-    private Door southDoor;
-    private Door westDoor;
-
-    // Public variables
+    #region Public Variables
     public bool containsEnemies;
     public bool isShopRoom;
     public bool isLastRoom;
     public bool isPuzzle1;
+    public bool doorsOpen;
 
     public LevelManager myGenerator;
     public Vector2 virtualLoc;
@@ -31,15 +24,31 @@ public class Room : MonoBehaviour
     public Transform doors;
     public Transform floor;
     public Transform traps;
+    #endregion
 
-    public bool doorsOpen;
+    #region Private Variables
+    private List<CharacterManager> enemies = new List<CharacterManager>();
 
+    private Door northDoor;
+    private Door eastDoor;
+    private Door southDoor;
+    private Door westDoor;
+    #endregion
+
+    /*
+     * Initialize emty room object
+     */
     public void Init()
     {
         CreateSubTransforms();
     }
 
-    // Level generated now finalize rooms
+    /*
+     * Finish room
+     * Create shop or puzzle out of this room
+     * create the doors
+     * spawn the enemies
+     */
     public void Finish()
     {
         if (isShopRoom)
@@ -57,6 +66,9 @@ public class Room : MonoBehaviour
         SetUpRoom();
     }
 
+    /*
+     * Replace this room with a shop
+     */
     private void ReplaceWithShop()
     {
         // Remove all childs
@@ -76,6 +88,9 @@ public class Room : MonoBehaviour
         size = new Vector2(11, 9);
     }
 
+    /*
+     * Replace this room with puzzle1 room
+     */
     private void ReplaceWithPuzzle1()
     {
         // Remove all childs
@@ -100,6 +115,9 @@ public class Room : MonoBehaviour
         camera.GetComponent<Camera>().orthographicSize = size.y / 2 + 2;
     }
 
+    /*
+     * Search and find my neighbors
+     */
     private void GetNeighbors()
     {
         Vector2 north = new Vector2(virtualLoc.x, virtualLoc.y + 1);
@@ -128,6 +146,9 @@ public class Room : MonoBehaviour
         }
     }
 
+    /*
+     * Create doors to my neighbors
+     */
     private void CreateDoors()
     {
         // North door generation
@@ -156,6 +177,11 @@ public class Room : MonoBehaviour
         }
     }
 
+    /*
+     * Setup room
+     * Spawn enemies if needed
+     * Replace with puzzle or shop if needed.
+     */
     private void SetUpRoom()
     {
         if (containsEnemies)
@@ -234,6 +260,9 @@ public class Room : MonoBehaviour
         }
     }
 
+    /*
+     * Create child transforms for walls, doors, floor, traps
+     */
     private void CreateSubTransforms()
     {
         walls = new GameObject("Walls").transform;
@@ -249,6 +278,9 @@ public class Room : MonoBehaviour
         traps.SetParent(transform);
     }
 
+    /*
+     * Called when player enters this room
+     */
     public void EnteredRoom()
     {
         // If there are no enemies open doors!
@@ -258,6 +290,9 @@ public class Room : MonoBehaviour
         }
     }
 
+    /*
+     * Called when player leaves this room
+     */
     public void LeaveRoom(Door door)
     {
         Room newRoom = null;
@@ -284,6 +319,9 @@ public class Room : MonoBehaviour
         myGenerator.TransistRoom(this, newRoom);
     }
 
+    /*
+     * Open doors
+     */
     public void OpenDoors()
     {
         if (doorsOpen)
@@ -294,6 +332,10 @@ public class Room : MonoBehaviour
         StartCoroutine(UnlockAlldoors());
     }
 
+    /*
+     * Take enemy of the enemy list if he died.
+     * If all enemies are gone open doors.
+     */
     public void EnemyDied(CharacterManager enemy)
     {
         enemies.Remove(enemy);
@@ -304,6 +346,10 @@ public class Room : MonoBehaviour
         }
     }
 
+    /*
+     * Asynchronous code
+     * Let all doors open with their animation
+     */
     private IEnumerator UnlockAlldoors()
     {
         if (northDoor)

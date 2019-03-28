@@ -6,14 +6,6 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class CharacterAnimator : MonoBehaviour
 {
-    #region Private Variables
-    private new SpriteRenderer renderer;
-    private CharacterManager character;
-    private Sprite[] usingArray = null;
-    private int currentIndex = 0;
-    private Color normalColor;
-    #endregion
-
     #region Public Variables
     [Header("Settings")]
     [Range(0.1f, 0.5f)]
@@ -42,11 +34,24 @@ public class CharacterAnimator : MonoBehaviour
     public Sprite[] dieSprites;
     #endregion
 
+    #region Private Variables
+    private new SpriteRenderer renderer;
+    private CharacterManager character;
+    private Sprite[] usingArray = null;
+    private int currentIndex    = 0;
+    private Color normalColor;
+    #endregion
+
+    /*
+     * Start is called before the first frame update.
+     * We use it to get the required components.
+     * And we set some variables and start the animation coroutine.
+     */
     private void Start()
     {
         // Gather required components
-        renderer = GetComponent<SpriteRenderer>();
-        character = GetComponent<CharacterManager>();
+        renderer    = GetComponent<SpriteRenderer>();
+        character   = GetComponent<CharacterManager>();
 
         // Gather default variables
         normalColor = renderer.material.color;
@@ -55,14 +60,19 @@ public class CharacterAnimator : MonoBehaviour
         StartCoroutine(Animate());
     }
     
-    // Update animations each frame.
+    /*
+     * Update is called each frame.
+     * Here we update the sprite each frame
+     */
     private void Update()
     {
         // Set correct sprite
         UpdateSprite();
     }
 
-    // Animate
+    /*
+     * Updating the sprite so we have a smooth animation
+     */
     private void UpdateSprite()
     {
         // Check if not dead
@@ -171,6 +181,11 @@ public class CharacterAnimator : MonoBehaviour
         }
     }
 
+    /*
+     * Update the animation array.
+     * Repalce sprite array if needed and start animation from the beginning
+     * @var Sprite[] sprite array
+     */
     private void updateArray(Sprite[] newArray)
     {
         // Check if array is diffrent
@@ -184,6 +199,10 @@ public class CharacterAnimator : MonoBehaviour
         usingArray = newArray;
     }
 
+    /*
+     * Asynchornus piece of code that runs in the background.
+     * We aniamte the sprites here and replace the sprite over time
+     */
     private IEnumerator Animate()
     {
         while(true)
@@ -228,12 +247,20 @@ public class CharacterAnimator : MonoBehaviour
         }
     }
 
+    /*
+     * The character has died.
+     * Start playing die animation
+     */
     public void Die()
     {
         // Update using array
         updateArray(dieSprites);
     }
 
+    /*
+     * The character got hit.
+     * Show hit animation
+     */
     public IEnumerator GotHit()
     {
         // Change color to hit
@@ -246,6 +273,9 @@ public class CharacterAnimator : MonoBehaviour
         renderer.color = normalColor;
     }
 
+    /*
+     * Show attack animation for enemy
+     */
     public IEnumerator EnemyAttack()
     {
         renderer.color = Color.white;

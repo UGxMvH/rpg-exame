@@ -1,11 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(BoxCollider2D))]
 public class Puzzle1Button : MonoBehaviour
 {
+    #region Public Variables
     public Puzzle1Spike[] spikes;
     public Sprite spikesOut;
     public Sprite spikesIn;
@@ -13,27 +12,42 @@ public class Puzzle1Button : MonoBehaviour
     public Sprite off;
     public AudioClip audioOn;
     public AudioClip audioOff;
+    #endregion
 
+    #region Private Variables
     private BoxCollider2D boxCollider;
     private new SpriteRenderer renderer;
+    #endregion
 
-    // Start is called before the first frame update
+    /*
+     * Start is called before the first frame update.
+     * We use it to gether the required components and set default variables.
+     */
     void Start()
     {
         boxCollider = GetComponent<BoxCollider2D>();
-        renderer = GetComponent<SpriteRenderer>();
+        renderer    = GetComponent<SpriteRenderer>();
     }
 
+    /*
+     * OnTriggerEnter2D is called whenever a object enters the collider of this GameObject.
+     */
     private void OnTriggerEnter2D(Collider2D collision)
     {
         CheckIfPressed();
     }
 
+    /*
+     * OnTriggerEnter2D is called whenever a object leaves the collider of this GameObject.
+     */
     private void OnTriggerExit2D(Collider2D collision)
     {
         CheckIfPressed();
     }
 
+    /*
+     * The button is Pressed
+     */
     private void Pressed()
     {
         // Check if spikes are already off
@@ -56,6 +70,9 @@ public class Puzzle1Button : MonoBehaviour
         renderer.sprite = on;
     }
 
+    /*
+     * The button is unpressed
+     */
     private void UnPressed()
     {
         // Check if spikes are already on
@@ -78,6 +95,9 @@ public class Puzzle1Button : MonoBehaviour
         renderer.sprite = off;
     }
 
+    /*
+     * Check if the button is pressed by the player or box
+     */
     private void CheckIfPressed()
     {
         Collider2D[] results = new Collider2D[10];

@@ -5,8 +5,15 @@ using DG.Tweening;
 [RequireComponent(typeof(RectTransform))]
 public class AnimateTitle : MonoBehaviour
 {
-    RectTransform rect;
+    #region Private Variables
+    private RectTransform rect;
+    #endregion
 
+    /*
+     * Start is called before the first frame update.
+     * We use it to gether the required components and set default variables.
+     * Start animation
+     */
     private void Start()
     {
         rect = GetComponent<RectTransform>();
@@ -14,6 +21,9 @@ public class AnimateTitle : MonoBehaviour
         StartCoroutine(Animate());
     }
 
+    /*
+     * Animate Text title
+     */
     private IEnumerator Animate()
     {
         while (true)

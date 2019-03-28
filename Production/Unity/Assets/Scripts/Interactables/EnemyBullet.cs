@@ -1,17 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CircleCollider2D))]
 public class EnemyBullet : MonoBehaviour, PoolInterface
 {
-    private Rigidbody2D rb;
-
+    #region Public Variables
     public float speed;
     public float damage;
+    #endregion
 
-    // Start is called before the first frame update
+    #region Private Variables
+    private Rigidbody2D rb;
+    #endregion
+
+    /*
+     * OnStart is a interface function that is called whenever this GameObject is used by the PoolManager.
+     */
     public void OnStart()
     {
         if (!rb)
@@ -23,6 +27,9 @@ public class EnemyBullet : MonoBehaviour, PoolInterface
         rb.AddForce(transform.up * speed);
     }
 
+    /*
+     * OnTriggerEnter2D is called whenever a object enters the collider of this GameObject.
+     */
     private void OnCollisionEnter2D(Collision2D collision)
     {
         CharacterManager character = collision.gameObject.GetComponent<CharacterManager>();

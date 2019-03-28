@@ -462,10 +462,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a160d838ff8b4b4693ac20007e008c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Name: 
-  m_EditorClassIdentifier: 
   m_AssetsPPU: 100
   m_RefResolutionX: 320
   m_RefResolutionY: 180
@@ -474,7 +470,6 @@ MonoBehaviour:
   m_CropFrameX: 0
   m_CropFrameY: 0
   m_StretchFill: 0
-  m_Camera: {fileID: 0}
 --- !u!114 &316694961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -493,6 +488,7 @@ MonoBehaviour:
   overlayLvl3: {fileID: 954393533}
   overlayLvlBoss: {fileID: 1843566087}
   overlayFinishedGame: {fileID: 2027086618}
+  interactText: {fileID: 4541602025570772901}
 --- !u!1 &493679187
 GameObject:
   m_ObjectHideFlags: 0
@@ -52640,30 +52636,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4541602025736584950, guid: d506e655cf9f347d9875f8f0d8ca45bb,
+        type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4541602025736584950, guid: d506e655cf9f347d9875f8f0d8ca45bb,
+        type: 3}
+      propertyPath: m_BlocksRaycasts
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4541602025829167426, guid: d506e655cf9f347d9875f8f0d8ca45bb,
+        type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4541602025829167426, guid: d506e655cf9f347d9875f8f0d8ca45bb,
+        type: 3}
+      propertyPath: m_BlocksRaycasts
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4541602025741598955, guid: d506e655cf9f347d9875f8f0d8ca45bb,
         type: 3}
       propertyPath: m_Name
       value: Overworld Canvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 4541602025736584950, guid: d506e655cf9f347d9875f8f0d8ca45bb,
-        type: 3}
-      propertyPath: m_Interactable
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4541602025736584950, guid: d506e655cf9f347d9875f8f0d8ca45bb,
-        type: 3}
-      propertyPath: m_BlocksRaycasts
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4541602025829167426, guid: d506e655cf9f347d9875f8f0d8ca45bb,
-        type: 3}
-      propertyPath: m_Interactable
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4541602025829167426, guid: d506e655cf9f347d9875f8f0d8ca45bb,
-        type: 3}
-      propertyPath: m_BlocksRaycasts
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4541602025741598967, guid: d506e655cf9f347d9875f8f0d8ca45bb,
         type: 3}
@@ -52810,5 +52806,22 @@ PrefabInstance:
       propertyPath: m_Colors.m_HighlightedColor.b
       value: 0.78431374
       objectReference: {fileID: 0}
+    - target: {fileID: 4541602025818211341, guid: d506e655cf9f347d9875f8f0d8ca45bb,
+        type: 3}
+      propertyPath: m_Text
+      value: Press "Space" to interact
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d506e655cf9f347d9875f8f0d8ca45bb, type: 3}
+--- !u!114 &4541602025570772901 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4541602025818211341, guid: d506e655cf9f347d9875f8f0d8ca45bb,
+    type: 3}
+  m_PrefabInstance: {fileID: 4541602025570772900}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 826401702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

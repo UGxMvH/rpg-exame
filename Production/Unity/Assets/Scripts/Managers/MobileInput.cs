@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class MobileInput : MonoBehaviour
 {
+    #region Public Variables
     public CharacterManager player;
     public float movementX, movementY;
+    #endregion
 
+    /*
+     * Release Mobile input button
+     */
     public void OnRelease()
     {
         player.horizontal = 0;
         player.vertical = 0;
     }
 
+    /*
+     * Press Mobile input button
+     */
     public void OnPress()
     {
         player.usingMobile = true;
@@ -20,6 +28,9 @@ public class MobileInput : MonoBehaviour
         player.vertical = movementY;
     }
 
+    /*
+     * Pressed attack button
+     */
     public void Attack()
     {
         if (!player.isAttacking)

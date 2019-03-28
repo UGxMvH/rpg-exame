@@ -7,14 +7,12 @@ using UnityEngine.UI;
 [RequireComponent(typeof(CharacterAnimator))]
 public class CharacterManager : MonoBehaviour
 {
+    #region Static Variables And Enums
     public static CharacterManager player;
     public enum Direction { North, East, South, West };
+    #endregion
 
-    private Rigidbody2D body;
-    private CharacterAnimator animator;
-    private float lastVerticalInput;
-    private float lastHorizontalInput;
-
+    #region Internal Variables
     internal Direction currentDirection;
     internal int coins;
     internal int potions;
@@ -26,7 +24,9 @@ public class CharacterManager : MonoBehaviour
     internal bool isDead = false;
     internal bool usingMobile = false;
     internal Room AiRoom;
+    #endregion
 
+    #region Public Variables
     [Header("Settings")]
     public bool overworld;
     public bool isAI;
@@ -42,7 +42,19 @@ public class CharacterManager : MonoBehaviour
     public GameObject interactMSG;
     public AudioClip dieSound;
     public AudioClip enemyAttackSound;
+    #endregion
 
+    #region Private Variables
+    private Rigidbody2D body;
+    private CharacterAnimator animator;
+    private float lastVerticalInput;
+    private float lastHorizontalInput;
+    #endregion
+
+    /*
+     * Awake is called when the script instance is being loaded.
+     * We use it to set a static refrence to the player.
+     */
     private void Awake()
     {
         if (!isAI)
@@ -51,35 +63,44 @@ public class CharacterManager : MonoBehaviour
         }
     }
 
+    /*
+     * Start is called before the first frame update.
+     * We use it to gether the required components and set default variables.
+     * Also for enemies we choose a random location they start walking to.
+     */
     private void Start()
     {
         // Gather components
-        body = GetComponent<Rigidbody2D>();
-        animator = GetComponent<CharacterAnimator>();
+        body        = GetComponent<Rigidbody2D>();
+        animator    = GetComponent<CharacterAnimator>();
 
         // Set values from save game
         if (SaveGameManager.instance)
         {
-            SaveGame sg = SaveGameManager.instance.currentSaveGame;
-
-            health = sg.maxHealth;
-            currentHealth = sg.health;
-            damage = sg.damage;
-            coins = sg.coins;
-            potions = sg.potions;
+            SaveGame sg     = SaveGameManager.instance.currentSaveGame;
+            health          = sg.maxHealth;
+            currentHealth   = sg.health;
+            damage          = sg.damage;
+            coins           = sg.coins;
+            potions         = sg.potions;
 
             if (potionText)
             {
                 potionText.text = potions + "x";
+            }
+
+            if (coinText)
+            {
+                coinText.text = coins.ToString("000");
             }
         }
 
         if (healthSlider)
         {
             // Set health slider values if there is a health slider
-            healthSlider.minValue = 0;
-            healthSlider.maxValue = health;
-            healthSlider.value = health;
+            healthSlider.minValue   = 0;
+            healthSlider.maxValue   = health;
+            healthSlider.value      = health;
         }
 
         if (potionUsageText && GameManager.instance.isUsingController)
@@ -112,6 +133,10 @@ public class CharacterManager : MonoBehaviour
         }
     }
 
+    /*
+     * Update is called each frame
+     * We use it to process player input and AI behaviour.
+     */
     private void Update()
     {
         // Check if is AI
@@ -154,6 +179,9 @@ public class CharacterManager : MonoBehaviour
         UpdateDirection();
     }
 
+    /*
+     * Player uses potion
+     */
     private void UsePotion()
     {
         // Minus 1 potion
@@ -184,6 +212,10 @@ public class CharacterManager : MonoBehaviour
         }
     }
 
+    /*
+     * Update AI movement.
+     * Set direction and movement input for the AI
+     */
     private void UpdateAIMovement()
     {
         // Don't do when enemy is dead
@@ -220,6 +252,9 @@ public class CharacterManager : MonoBehaviour
         }
     }
 
+    /*
+     * Keep track of the time a input is down for the player
+     */
     private void UpdateLastInputTimes()
     {
         // Update horizontal time
@@ -249,6 +284,10 @@ public class CharacterManager : MonoBehaviour
         }
     }
 
+    /*
+     * Asynchronous code to attack.
+     * Wehenver the player attacks we need to wait till the animation is done and then fire the arrow.
+     */
     public IEnumerator PlayerAttack()
     {
         yield return new WaitForSeconds(.3f);
@@ -282,6 +321,11 @@ public class CharacterManager : MonoBehaviour
         PoolManager.instance.InstantiateObject("Arrow", pos, rot);
     }
 
+    /*
+     * Enemy attack
+     * Show enemy attack animation and fire bullets.
+     * 2 Options which we choose a randomly attack. Diagonal or straight.
+     */
     private IEnumerator EnemyAttack()
     {
         while (true)
@@ -313,7 +357,9 @@ public class CharacterManager : MonoBehaviour
         }
     }
 
-    // Update direction
+    /*
+     * Update direction based on velocity or input
+     */
     private void UpdateDirection()
     {
         if (Time.timeScale == 0)
@@ -363,6 +409,9 @@ public class CharacterManager : MonoBehaviour
         }
     }
 
+    /* 
+     * Updates if the player is idle or not.
+     */
     private void UpdateIdleState()
     {
         if (body.velocity == Vector2.zero)
@@ -375,6 +424,10 @@ public class CharacterManager : MonoBehaviour
         }
     }
 
+    /* 
+     * FixedUpdate is called every fixed frame-rate frame whenever the physics in Unity update.
+     * We use it to set our velocity (movement)
+     */
     private void FixedUpdate()
     {
         float movementX = horizontal;
@@ -411,6 +464,11 @@ public class CharacterManager : MonoBehaviour
         body.velocity = new Vector2(movementX * runSpeed, movementY * runSpeed);
     }
 
+    /*
+     * Character died.
+     * Play dead animation and for AI's drop a coin
+     * If player dies show died window
+     */
     private void Dead()
     {
         if (isAI)
@@ -445,8 +503,8 @@ public class CharacterManager : MonoBehaviour
         {
             // Player died
             Time.timeScale = 0;
-            diedWindow.interactable = true;
-            diedWindow.blocksRaycasts = true;
+            diedWindow.interactable     = true;
+            diedWindow.blocksRaycasts   = true;
             diedWindow.gameObject.SetActive(true);
             diedWindow.GetComponent<RectTransform>().DOAnchorPosY(0, 1);
             diedWindow.DOFade(1, 1);
@@ -458,6 +516,9 @@ public class CharacterManager : MonoBehaviour
         }
     }
 
+    /*
+     * Do damage to the AI or player
+     */
     public void DoDamage(float damage)
     {
         // Don't do damage while transisting
@@ -492,6 +553,9 @@ public class CharacterManager : MonoBehaviour
         }
     }
 
+    /*
+     * Add coin(s) to the player
+     */
     public void AddCoin(int amount = 1)
     {
         coins += amount;
@@ -502,6 +566,9 @@ public class CharacterManager : MonoBehaviour
         }
     }
 
+    /*
+     * Remove coin(s) from the player
+     */
     public bool RemoveCoins(int price)
     {
         if (coins - price < 0)
@@ -519,6 +586,9 @@ public class CharacterManager : MonoBehaviour
         return true;
     }
 
+    /*
+     * Add potions to the player
+     */
     public void AddPotion(int amount = 1)
     {
         potions += amount;

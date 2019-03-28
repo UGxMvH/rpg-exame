@@ -637,6 +637,9 @@ MonoBehaviour:
   mainMenu: {fileID: 532828566}
   saveGames: {fileID: 920298467}
   settings: {fileID: 435001467}
+  saveGame1Go: {fileID: 1488167041}
+  saveGame2Go: {fileID: 1577102600}
+  saveGame3Go: {fileID: 1006318640}
   scaleHover: {x: 0.2, y: 0.2, z: 0}
   saveGameScaleHover: {x: 0.05, y: 0.05, z: 0}
   hoverButton: {fileID: 8300000, guid: 1721f3a09ba784d0db644493b150c951, type: 3}
@@ -1666,6 +1669,7 @@ MonoBehaviour:
     maxHealth: 10
     damage: 4
     progress: 0
+    potions: 0
     finishedLvl1: 0
     finisehedLvl2: 0
     finishedLvl3: 0
@@ -1677,6 +1681,7 @@ MonoBehaviour:
     maxHealth: 10
     damage: 4
     progress: 0
+    potions: 0
     finishedLvl1: 0
     finisehedLvl2: 0
     finishedLvl3: 0
@@ -1688,13 +1693,11 @@ MonoBehaviour:
     maxHealth: 10
     damage: 4
     progress: 0
+    potions: 0
     finishedLvl1: 0
     finisehedLvl2: 0
     finishedLvl3: 0
     finishedBoss: 0
-  saveGame1Go: {fileID: 1488167041}
-  saveGame2Go: {fileID: 1577102600}
-  saveGame3Go: {fileID: 1006318640}
 --- !u!4 &609379315
 Transform:
   m_ObjectHideFlags: 0
@@ -1939,6 +1942,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc6765ca70995304ab41cd11b34b50b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isUsingController: 0
 --- !u!1 &658205119
 GameObject:
   m_ObjectHideFlags: 0
@@ -2414,17 +2418,17 @@ PrefabInstance:
     - target: {fileID: 114107398566553010, guid: b8a6752faa35ae04aa130695a5b2d0d1,
         type: 3}
       propertyPath: m_Colors.m_PressedColor.r
-      value: 0.7294118
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114107398566553010, guid: b8a6752faa35ae04aa130695a5b2d0d1,
         type: 3}
       propertyPath: m_Colors.m_PressedColor.g
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114107398566553010, guid: b8a6752faa35ae04aa130695a5b2d0d1,
         type: 3}
       propertyPath: m_Colors.m_PressedColor.b
-      value: 0.19215687
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224885495489159726, guid: b8a6752faa35ae04aa130695a5b2d0d1,
         type: 3}
@@ -3371,7 +3375,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 609379314}
+      objectReference: {fileID: 389143281}
     - target: {fileID: 7502142103697925246, guid: 91f71f0e62026476faf83c3d7a7627ef,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -3520,17 +3524,17 @@ PrefabInstance:
     - target: {fileID: 114107398566553010, guid: b8a6752faa35ae04aa130695a5b2d0d1,
         type: 3}
       propertyPath: m_Colors.m_PressedColor.r
-      value: 0.7294118
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114107398566553010, guid: b8a6752faa35ae04aa130695a5b2d0d1,
         type: 3}
       propertyPath: m_Colors.m_PressedColor.g
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114107398566553010, guid: b8a6752faa35ae04aa130695a5b2d0d1,
         type: 3}
       propertyPath: m_Colors.m_PressedColor.b
-      value: 0.19215687
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224885495489159726, guid: b8a6752faa35ae04aa130695a5b2d0d1,
         type: 3}
@@ -4119,7 +4123,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 609379314}
+      objectReference: {fileID: 389143281}
     - target: {fileID: 7502142103697925246, guid: 91f71f0e62026476faf83c3d7a7627ef,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -4400,7 +4404,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 609379314}
+      objectReference: {fileID: 389143281}
     - target: {fileID: 7502142103697925246, guid: 91f71f0e62026476faf83c3d7a7627ef,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName

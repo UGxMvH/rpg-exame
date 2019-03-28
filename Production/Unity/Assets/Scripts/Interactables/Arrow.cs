@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -7,14 +6,21 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class Arrow : MonoBehaviour, PoolInterface
 {
-    private bool stuck;
-    private new SpriteRenderer renderer;
-    private Rigidbody2D rb;
-
+    #region Public Variables
     public float speed;
     public AudioClip[] hitSounds;
     public AudioClip[] shootSounds;
+    #endregion
 
+    #region Private Variables
+    private bool stuck;
+    private new SpriteRenderer renderer;
+    private Rigidbody2D rb;
+    #endregion
+
+    /*
+     * OnStart is a interface function that is called whenever this GameObject is used by the PoolManager.
+     */
     public void OnStart()
     {
         if (!renderer)
@@ -38,6 +44,9 @@ public class Arrow : MonoBehaviour, PoolInterface
         }
     }
 
+    /*
+     * OnTriggerEnter2D is called whenever a object enters the collider of this GameObject.
+     */
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!stuck)
@@ -73,6 +82,10 @@ public class Arrow : MonoBehaviour, PoolInterface
         }
     }
 
+    /*
+     * Asynchronous code
+     * Called whenever the arrow needs to disapear
+     */
     private IEnumerator Dissapear()
     {
         yield return new WaitForSeconds(1);

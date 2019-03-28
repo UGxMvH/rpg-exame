@@ -5,14 +5,23 @@ using UnityEngine.UI;
 
 public class Maria : Interactable
 {
+    #region Public Variables
     public CanvasGroup StoryLine;
     public Text speech;
     public float speed = 0.1f;
+    #endregion
 
+    #region Private Variables
     private Coroutine co;
     private bool isTalking;
     private char[] speechText;
+    #endregion
 
+    /*
+     * Start is called before the first frame update.
+     * We use it to gether the required components and set default variables.
+     * Also destroy the balloon if level 1 is already finished.
+     */
     private void Start()
     {
         // Get speech
@@ -29,6 +38,9 @@ public class Maria : Interactable
         }
     }
 
+    /*
+     * Called whenever the player is interacting with this GameObject
+     */
     public override void OnInteract()
     {
         base.OnInteract();
@@ -46,6 +58,9 @@ public class Maria : Interactable
         }
     }
 
+    /*
+     * Update is called each frame.
+     */
     public override void Update()
     {
         base.Update();
@@ -59,6 +74,9 @@ public class Maria : Interactable
         }
     }
 
+    /*
+     * Tell storyline to player.
+     */
     private IEnumerator TellStory()
     {
         yield return new WaitForEndOfFrame();
@@ -83,6 +101,9 @@ public class Maria : Interactable
         }
     }
 
+    /*
+     * Finish dialog and make it disapear
+     */
     private void FinishDialog()
     {
         if (co != null)

@@ -5,20 +5,31 @@ using UnityEngine.UI;
 
 public class ShopManager : MonoBehaviour
 {
+    #region Public Variables
     public static ShopManager instance;
 
     public CanvasGroup shopWindow;
     public Text error;
     public Text success;
+    #endregion
 
+    #region Private Variables
     private Coroutine errorCo;
     private Coroutine successCo;
+    #endregion
 
+    /*
+     * Awake is called when the script instance is being loaded.
+     * We use it to set a static refrence to the shopmanager.
+     */
     private void Awake()
     {
         instance = this;
     }
 
+    /*
+     * Buy health upgrade
+     */
     public void BuyHealthUpgrade()
     {
         if (BuyItem(11))
@@ -31,6 +42,9 @@ public class ShopManager : MonoBehaviour
         }
     }
 
+    /*
+     * Buy da,age upgrade
+     */
     public void BuyDamageUpgrade()
     {
         if (BuyItem(11))
@@ -42,6 +56,9 @@ public class ShopManager : MonoBehaviour
         }
     }
 
+    /*
+     * Buy health potion
+     */
     public void BuyHealthPotion()
     {
         if (BuyItem(5))
@@ -53,6 +70,9 @@ public class ShopManager : MonoBehaviour
         }
     }
 
+    /*
+     * Buy item check price and return if the player has enough money or not.
+     */
     public bool BuyItem(int price)
     {
         // Check if player has enoug money
@@ -88,6 +108,9 @@ public class ShopManager : MonoBehaviour
         return true;
     }
 
+    /*
+     * Show that player doesn't have enoug money
+     */
     private IEnumerator Error()
     {
         error.gameObject.SetActive(true);
@@ -99,6 +122,9 @@ public class ShopManager : MonoBehaviour
         errorCo = null;
     }
 
+    /*
+     * Show that player succesfully bought the item
+     */
     private IEnumerator Success(string text)
     {
         success.text = text;

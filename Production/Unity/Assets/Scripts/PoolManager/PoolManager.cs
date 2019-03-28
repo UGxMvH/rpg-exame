@@ -4,13 +4,20 @@ using UnityEngine;
 
 public class PoolManager : MonoBehaviour
 {
+    #region Public Variables
     public static PoolManager instance;
 
-    private Dictionary<string, Queue> createdPools = new Dictionary<string, Queue>();
-
     public List<PoolObject> pools = new List<PoolObject>();
+    #endregion
 
-    // Start is called before the first frame update
+    #region Private Variables
+    private Dictionary<string, Queue> createdPools = new Dictionary<string, Queue>();
+    #endregion
+
+    /*
+     * Awake is called when the script instance is being loaded.
+     * We use it to set a static refrence to the PoolManager.
+     */
     private void Awake()
     {
         instance = this;
@@ -19,6 +26,10 @@ public class PoolManager : MonoBehaviour
         GeneratePools();
     }
 
+    /*
+     * Generate pools
+     * First instantiate of all GameObjects so we can re-use them.
+     */
     private void GeneratePools()
     {
         foreach(PoolObject pool in pools)
@@ -36,6 +47,9 @@ public class PoolManager : MonoBehaviour
         }
     }
 
+    /*
+     * Use item from poolmanager
+     */
     public void InstantiateObject(string nameTag, Vector2 pos, Quaternion rot, Transform parent = null)
     {
         // Get item of queue

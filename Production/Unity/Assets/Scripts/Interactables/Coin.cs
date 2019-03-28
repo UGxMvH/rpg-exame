@@ -1,12 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public class Coin : MonoBehaviour
 {
+    #region Public Variables
     public AudioClip soundEffect;
+    #endregion
 
+    /*
+     * OnTriggerEnter2D is called whenever a object enters the collider of this GameObject.
+     */
     private void OnTriggerEnter2D(Collider2D collision)
     {
         CharacterManager player = collision.gameObject.GetComponent<CharacterManager>();

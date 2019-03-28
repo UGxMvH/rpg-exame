@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class Boss : MonoBehaviour
 {
+    #region Public Variables
     [Header("Audio")]
     [Tooltip("The music that should be played in the background.")]
     public AudioClip backgroundMusic;
@@ -18,23 +19,29 @@ public class Boss : MonoBehaviour
 
     [Header("Other")]
     public CanvasGroup finishedWindow;
+    #endregion
 
     /*
      * Start is called before the first frame update.
      * We use it to start the background music and set the health of the boss.
-     */ 
+     */
     private void Start()
     {
+        // Play backgroun music
         if (AudioManager.instance)
         {
             AudioManager.instance.music.clip = backgroundMusic;
             AudioManager.instance.music.Play();
         }
 
-        healthSlider.maxValue = health;
-        healthSlider.value = health;
+        // Set health
+        healthSlider.maxValue   = health;
+        healthSlider.value      = health;
     }
 
+    /*
+     * The boss's attack method
+     */
     public void Attack(int heightState)
     {
         // Play attack sound
@@ -63,6 +70,10 @@ public class Boss : MonoBehaviour
         }
     }
 
+    /*
+     * Whenever the player hits the boss the boss should be damaged.
+     * Damage handler
+     */
     public void DoDamage(int amount)
     {
         float newHealth = health - amount;
@@ -72,8 +83,8 @@ public class Boss : MonoBehaviour
             newHealth = 0;
         }
 
-        health = newHealth;
-        healthSlider.value = health;
+        health              = newHealth;
+        healthSlider.value  = health;
 
         if (health == 0)
         {
@@ -82,20 +93,24 @@ public class Boss : MonoBehaviour
         }
     }
 
+    /*
+     * Whenever the boss dies, We have to show the player that he won.
+     */
     private void BossDied()
     {
         // Save game
-        SaveGame sg = SaveGameManager.instance.currentSaveGame;
-        sg.finishedBoss = true;
-        sg.progress = 100;
-        sg.coins = CharacterManager.player.coins;
+        SaveGame sg         = SaveGameManager.instance.currentSaveGame;
+        sg.finishedBoss     = true;
+        sg.progress         = 100;
+        sg.coins            = CharacterManager.player.coins;
+
         SaveGameManager.instance.SaveGameToFile();
 
         // Show finished
         Time.timeScale = 0;
         finishedWindow.DOFade(1, .5f);
-        finishedWindow.interactable = true;
-        finishedWindow.blocksRaycasts = true;
+        finishedWindow.interactable     = true;
+        finishedWindow.blocksRaycasts   = true;
 
         if (GameManager.instance.isUsingController)
         {

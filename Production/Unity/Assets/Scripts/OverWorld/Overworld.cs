@@ -1,12 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using DG.Tweening;
+﻿using DG.Tweening;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Overworld : MonoBehaviour
 {
+    #region Public Variables
     public AudioClip backgroundMusic;
 
     public CanvasGroup pauseWindow;
@@ -16,9 +15,17 @@ public class Overworld : MonoBehaviour
     public GameObject overlayLvlBoss;
     public GameObject overlayFinishedGame;
 
-    private bool inPauseMenu;
+    public Text interactText;
+    #endregion
 
-    // Start is called before the first frame update
+    #region Private Variables
+    private bool inPauseMenu;
+    #endregion
+
+    /*
+     * Start is called before the first frame update.
+     * We use it to gether the required components and set default variables.
+     */
     private void Start()
     {
         AudioManager.instance.music.clip = backgroundMusic;
@@ -43,10 +50,20 @@ public class Overworld : MonoBehaviour
         {
             overlayLvl2.SetActive(true);
         }
+
+        // Change interact text if using controller
+        if (GameManager.instance.isUsingController)
+        {
+            interactText.text = "Press \"A\" to interact!";
+        }
     }
 
+    /*
+     * Update is called each frame.
+     */
     private void Update()
     {
+        // Check if player presses pause button
         if (Input.GetButtonDown("Pause"))
         {
             if (inPauseMenu)
@@ -60,6 +77,9 @@ public class Overworld : MonoBehaviour
         }
     }
 
+    /*
+     * Open pause menu
+     */
     private void OpenPauseMenu()
     {
         inPauseMenu = true;
@@ -74,6 +94,9 @@ public class Overworld : MonoBehaviour
         }
     }
 
+    /*
+     * Close pause menu
+     */
     public void ClosePauseMenu()
     {
         inPauseMenu = false;
@@ -83,8 +106,12 @@ public class Overworld : MonoBehaviour
         pauseWindow.blocksRaycasts = false;
     }
 
+    /*
+     * Exit overworld and go back to main menu
+     */
     public void GoToMainMenu()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(0);
     }
 }

@@ -1,11 +1,8 @@
 ﻿
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 [System.Serializable]
 public class SaveGame
 {
+    #region Public Variables
     public string title;
 
     public float health;
@@ -20,4 +17,5 @@ public class SaveGame
     public bool finisehedLvl2;
     public bool finishedLvl3;
     public bool finishedBoss;
+    #endregion
 }

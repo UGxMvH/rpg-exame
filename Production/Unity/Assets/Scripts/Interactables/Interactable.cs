@@ -5,8 +5,15 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public class Interactable : MonoBehaviour
 {
+    #region Private Variables
     private bool canInteract;
+    #endregion
 
+    /*
+     * Set interactable state
+     * @var bool newValue (Is interactable?)
+     * @var GameObject go (Which GameObject is colliding)
+     */
     private void SetInteractable(bool newValue, GameObject go)
     {
         // Check if player collided
@@ -29,6 +36,9 @@ public class Interactable : MonoBehaviour
         }
     }
 
+    /*
+     * Called every frame.
+     */
     public virtual void Update()
     {
         // If player pressed attack button and can interact
@@ -39,28 +49,43 @@ public class Interactable : MonoBehaviour
         }
     }
 
-    // What happens when we interact with this object (overridable)
+    /*
+     * Overridable
+     * Called whenever a player is interacting with this GameObject.
+     */
     public virtual void OnInteract()
     {
         CharacterManager.player.interactMSG.SetActive(false);
     }
 
     #region collider functions
+    /*
+     * Called whenever a GameObject is colliding with this GameObject
+     */
     private void OnCollisionEnter2D(Collision2D collision)
     {
         SetInteractable(true, collision.gameObject);
     }
 
+    /*
+     * Called whenever a GameObject stops colliding with this GameObject
+     */
     private void OnCollisionExit2D(Collision2D collision)
     {
         SetInteractable(false, collision.gameObject);
     }
 
+    /*
+     * Called whenever a GameObject is entering the trigger area of this collider
+     */
     private void OnTriggerEnter2D(Collider2D collision)
     {
         SetInteractable(true, collision.gameObject);
     }
 
+    /*
+     * Called whenever a GameObject is leaving the trigger area of this collider
+     */
     private void OnTriggerExit2D(Collider2D collision)
     {
         SetInteractable(false, collision.gameObject);

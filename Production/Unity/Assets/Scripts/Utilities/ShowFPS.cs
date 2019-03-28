@@ -1,13 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class ShowFPS : MonoBehaviour
 {
+    #region Public Variables
     public Text fpsText;
     public float deltaTime;
+    #endregion
 
+    /*
+     * Update is called each frame.
+     */
     void Update()
     {
         deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
