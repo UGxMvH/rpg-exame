@@ -1,22 +1,28 @@
 ﻿using DG.Tweening;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Boss : MonoBehaviour
 {
     [Header("Audio")]
+    [Tooltip("The music that should be played in the background.")]
     public AudioClip backgroundMusic;
+    [Tooltip("The sound effect that is played whenever the boss attacks.")]
     public AudioClip attackSound;
 
     [Header("Health")]
+    [Tooltip("The amount of health the boss starts with.")]
     public float health = 100;
+    [Tooltip("Please assign the health slider of the boss here.")]
     public Slider healthSlider;
 
     [Header("Other")]
     public CanvasGroup finishedWindow;
 
+    /*
+     * Start is called before the first frame update.
+     * We use it to start the background music and set the health of the boss.
+     */ 
     private void Start()
     {
         if (AudioManager.instance)
