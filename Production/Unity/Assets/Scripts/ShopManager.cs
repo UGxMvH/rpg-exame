@@ -7,7 +7,7 @@ public class ShopManager : MonoBehaviour
 {
     public static ShopManager instance;
 
-    public GameObject shopWindow;
+    public CanvasGroup shopWindow;
     public Text error;
     public Text success;
 

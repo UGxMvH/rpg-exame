@@ -14,6 +14,7 @@ public class SaveGame
     public int maxHealth;
     public int damage;
     public int progress;
+    public int potions;
 
     public bool finishedLvl1;
     public bool finisehedLvl2;

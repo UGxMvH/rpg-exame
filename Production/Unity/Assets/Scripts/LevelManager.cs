@@ -22,7 +22,7 @@ public class LevelManager : MonoBehaviour
     public GameObject shop;
     public GameObject puzzle1;
     public AudioClip levelMusic;
-    public CanvasGroup FinishedWindow;
+    public CanvasGroup finishedWindow;
 
     [Header("Tiles")]
     public GameObject[] floorTiles;
@@ -117,9 +117,15 @@ public class LevelManager : MonoBehaviour
     {
         // Finished
         Time.timeScale = 0;
-        FinishedWindow.gameObject.SetActive(true);
-        FinishedWindow.GetComponent<RectTransform>().DOAnchorPosY(0, 1);
-        FinishedWindow.DOFade(1, 1);
+        finishedWindow.DOFade(1, .5f);
+        finishedWindow.GetComponent<RectTransform>().DOAnchorPosY(0, 1);
+        finishedWindow.interactable = true;
+        finishedWindow.blocksRaycasts = true;
+
+        if (GameManager.instance.isUsingController)
+        {
+            finishedWindow.GetComponentInChildren<UnityEngine.UI.Button>().Select();
+        }
     }
 
     private IEnumerator GenerateLevel()

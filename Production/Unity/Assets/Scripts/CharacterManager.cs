@@ -37,6 +37,7 @@ public class CharacterManager : MonoBehaviour
     public Slider healthSlider;
     public Text coinText;
     public Text potionText;
+    public Text potionUsageText;
     public CanvasGroup diedWindow;
     public GameObject interactMSG;
     public AudioClip dieSound;
@@ -65,6 +66,12 @@ public class CharacterManager : MonoBehaviour
             currentHealth = sg.health;
             damage = sg.damage;
             coins = sg.coins;
+            potions = sg.potions;
+
+            if (potionText)
+            {
+                potionText.text = potions + "x";
+            }
         }
 
         if (healthSlider)
@@ -73,6 +80,11 @@ public class CharacterManager : MonoBehaviour
             healthSlider.minValue = 0;
             healthSlider.maxValue = health;
             healthSlider.value = health;
+        }
+
+        if (potionUsageText && GameManager.instance.isUsingController)
+        {
+            potionUsageText.text = "Press \"RB\" to use";
         }
 
         // Check if is AI
@@ -304,6 +316,11 @@ public class CharacterManager : MonoBehaviour
     // Update direction
     private void UpdateDirection()
     {
+        if (Time.timeScale == 0)
+        {
+            return;
+        }
+
         if (isAI || body.velocity == Vector2.zero)
         {
             // Get direction
@@ -428,9 +445,16 @@ public class CharacterManager : MonoBehaviour
         {
             // Player died
             Time.timeScale = 0;
+            diedWindow.interactable = true;
+            diedWindow.blocksRaycasts = true;
             diedWindow.gameObject.SetActive(true);
             diedWindow.GetComponent<RectTransform>().DOAnchorPosY(0, 1);
             diedWindow.DOFade(1, 1);
+
+            if (GameManager.instance.isUsingController)
+            {
+                diedWindow.GetComponentInChildren<Button>().Select();
+            }
         }
     }
 

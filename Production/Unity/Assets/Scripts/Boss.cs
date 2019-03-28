@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,7 +15,7 @@ public class Boss : MonoBehaviour
     public Slider healthSlider;
 
     [Header("Other")]
-    public GameObject finishedWindow;
+    public CanvasGroup finishedWindow;
 
     private void Start()
     {
@@ -80,10 +81,19 @@ public class Boss : MonoBehaviour
         // Save game
         SaveGame sg = SaveGameManager.instance.currentSaveGame;
         sg.finishedBoss = true;
+        sg.progress = 100;
+        sg.coins = CharacterManager.player.coins;
         SaveGameManager.instance.SaveGameToFile();
 
         // Show finished
         Time.timeScale = 0;
-        finishedWindow.SetActive(true);
+        finishedWindow.DOFade(1, .5f);
+        finishedWindow.interactable = true;
+        finishedWindow.blocksRaycasts = true;
+
+        if (GameManager.instance.isUsingController)
+        {
+            finishedWindow.GetComponentInChildren<Button>().Select();
+        }
     }
 }

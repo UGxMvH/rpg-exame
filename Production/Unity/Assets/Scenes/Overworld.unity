@@ -462,6 +462,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a160d838ff8b4b4693ac20007e008c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_AssetsPPU: 100
   m_RefResolutionX: 320
   m_RefResolutionY: 180
@@ -470,6 +474,7 @@ MonoBehaviour:
   m_CropFrameX: 0
   m_CropFrameY: 0
   m_StretchFill: 0
+  m_Camera: {fileID: 0}
 --- !u!114 &316694961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52640,6 +52645,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Overworld Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 4541602025736584950, guid: d506e655cf9f347d9875f8f0d8ca45bb,
+        type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4541602025736584950, guid: d506e655cf9f347d9875f8f0d8ca45bb,
+        type: 3}
+      propertyPath: m_BlocksRaycasts
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4541602025829167426, guid: d506e655cf9f347d9875f8f0d8ca45bb,
+        type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4541602025829167426, guid: d506e655cf9f347d9875f8f0d8ca45bb,
+        type: 3}
+      propertyPath: m_BlocksRaycasts
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4541602025741598967, guid: d506e655cf9f347d9875f8f0d8ca45bb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -52750,10 +52775,40 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 316694961}
+    - target: {fileID: 4541602025129015128, guid: d506e655cf9f347d9875f8f0d8ca45bb,
+        type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.r
+      value: 0.7830189
+      objectReference: {fileID: 0}
+    - target: {fileID: 4541602025129015128, guid: d506e655cf9f347d9875f8f0d8ca45bb,
+        type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.g
+      value: 0.7830189
+      objectReference: {fileID: 0}
+    - target: {fileID: 4541602025129015128, guid: d506e655cf9f347d9875f8f0d8ca45bb,
+        type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.b
+      value: 0.7830189
+      objectReference: {fileID: 0}
     - target: {fileID: 4541602024194601061, guid: d506e655cf9f347d9875f8f0d8ca45bb,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 316694961}
+    - target: {fileID: 4541602024194601061, guid: d506e655cf9f347d9875f8f0d8ca45bb,
+        type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.r
+      value: 0.78431374
+      objectReference: {fileID: 0}
+    - target: {fileID: 4541602024194601061, guid: d506e655cf9f347d9875f8f0d8ca45bb,
+        type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.g
+      value: 0.78431374
+      objectReference: {fileID: 0}
+    - target: {fileID: 4541602024194601061, guid: d506e655cf9f347d9875f8f0d8ca45bb,
+        type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.b
+      value: 0.78431374
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d506e655cf9f347d9875f8f0d8ca45bb, type: 3}

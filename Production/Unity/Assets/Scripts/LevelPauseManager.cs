@@ -33,6 +33,11 @@ public class LevelPauseManager : MonoBehaviour
         pauseWindow.blocksRaycasts = true;
         pauseWindow.interactable = true;
         pauseWindow.DOFade(1, .5f);
+
+        if (GameManager.instance.isUsingController)
+        {
+            pauseWindow.GetComponentInChildren<UnityEngine.UI.Button>().Select();
+        }
     }
 
     public void ClosePauseMenu()

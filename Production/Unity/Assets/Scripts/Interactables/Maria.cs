@@ -17,6 +17,16 @@ public class Maria : Interactable
     {
         // Get speech
         speechText = speech.text.ToCharArray();
+
+        // Remove text balloon if finished level 1
+        if (SaveGameManager.instance.currentSaveGame.finishedLvl1)
+        {
+            // Remove text balloon
+            if (transform.childCount > 0)
+            {
+                Destroy(transform.GetChild(0).gameObject);
+            }
+        }
     }
 
     public override void OnInteract()
@@ -40,7 +50,7 @@ public class Maria : Interactable
     {
         base.Update();
 
-        if (Input.GetButtonDown("Attack") || Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetButtonDown("Attack") || Input.GetButtonDown("Cancel"))
         {
             if(isTalking)
             {

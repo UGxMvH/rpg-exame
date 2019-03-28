@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Overworld : MonoBehaviour
 {
@@ -64,6 +65,13 @@ public class Overworld : MonoBehaviour
         inPauseMenu = true;
         Time.timeScale = 0;
         pauseWindow.DOFade(1, .5f);
+        pauseWindow.interactable = true;
+        pauseWindow.blocksRaycasts = true;
+
+        if (GameManager.instance.isUsingController)
+        {
+            pauseWindow.GetComponentInChildren<Button>().Select();
+        }
     }
 
     public void ClosePauseMenu()
@@ -71,6 +79,8 @@ public class Overworld : MonoBehaviour
         inPauseMenu = false;
         Time.timeScale = 1;
         pauseWindow.DOFade(0, .5f);
+        pauseWindow.interactable = false;
+        pauseWindow.blocksRaycasts = false;
     }
 
     public void GoToMainMenu()
