@@ -58,7 +58,7 @@ public class TransitionManager : MonoBehaviour
 
                 circle.localScale = newScale;
 
-                yield return new WaitForSeconds(0.01f);
+                yield return new WaitForSecondsRealtime(0.01f);
             }
         }
         else
@@ -69,7 +69,7 @@ public class TransitionManager : MonoBehaviour
 
                 circle.localScale = newScale;
 
-                yield return new WaitForSeconds(0.01f);
+                yield return new WaitForSecondsRealtime(0.01f);
             }
         }
 
